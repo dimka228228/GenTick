@@ -20,6 +20,18 @@ namespace WinLogin
     /// </summary>
     public partial class MainWindow : Window
     {
+        System.Windows.Media.Brush defaultColor_buttonStudent;  // Сохратить фон кнопки buttonStudent по умолчанию
+        System.Windows.Media.Brush defaultColor_buttonTeacher;  // Сохратить фон кнопки buttonTeacher по умолчанию
+        System.Windows.Media.Brush defaultColor_buttonAdmin;    // Сохратить фон кнопки buttonAdmin по умолчанию
+                   
+        enum selectionOfUser : byte   // Перечисление, которое фиксирует кем входит в программу пользователь 
+        {
+            Student = 1,     
+            Teacher = 2,     
+            Admin = 3       
+        }
+        selectionOfUser selUser = 0;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,10 +44,13 @@ namespace WinLogin
             textBoxFIO.Visibility = Visibility.Collapsed;
             textBoxGroup.Visibility = Visibility.Collapsed;
             textBoxLogin.Visibility = Visibility.Collapsed;
-            textBoxPasswordTech.Visibility = Visibility.Collapsed;
-            textBoxPasswordAdm.Visibility = Visibility.Collapsed;
-            buttonLogin.Visibility = Visibility.Collapsed;
+            passwordBoxTech.Visibility = Visibility.Collapsed;
+            passwordBoxAdm.Visibility = Visibility.Collapsed;
+            //buttonLogin.Visibility = Visibility.Collapsed;
 
+            defaultColor_buttonStudent = buttonStudent.Background;
+            defaultColor_buttonTeacher = buttonTeacher.Background;
+            defaultColor_buttonAdmin = buttonAdmin.Background;
         }
 
         private void buttonStudent_Click(object sender, RoutedEventArgs e)
@@ -49,9 +64,16 @@ namespace WinLogin
             textBoxFIO.Visibility = Visibility.Visible;
             textBoxGroup.Visibility = Visibility.Visible;
             textBoxLogin.Visibility = Visibility.Collapsed;
-            textBoxPasswordTech.Visibility = Visibility.Collapsed;
-            textBoxPasswordAdm.Visibility = Visibility.Collapsed;
+            passwordBoxTech.Visibility = Visibility.Collapsed;
+            passwordBoxAdm.Visibility = Visibility.Collapsed;
             buttonLogin.Visibility = Visibility.Visible;
+
+            buttonStudent.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90);
+            buttonTeacher.Background = defaultColor_buttonTeacher;
+            buttonAdmin.Background = defaultColor_buttonAdmin;
+
+            ClearFields();
+            selUser = selectionOfUser.Student;
 
         }
 
@@ -65,9 +87,16 @@ namespace WinLogin
             textBoxFIO.Visibility = Visibility.Collapsed;
             textBoxGroup.Visibility = Visibility.Collapsed;
             textBoxLogin.Visibility = Visibility.Visible;
-            textBoxPasswordTech.Visibility = Visibility.Visible;
-            textBoxPasswordAdm.Visibility = Visibility.Collapsed;
+            passwordBoxTech.Visibility = Visibility.Visible;
+            passwordBoxAdm.Visibility = Visibility.Collapsed;
             buttonLogin.Visibility = Visibility.Visible;
+
+            buttonStudent.Background = defaultColor_buttonStudent;
+            buttonTeacher.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90); 
+            buttonAdmin.Background = defaultColor_buttonAdmin;
+
+            ClearFields();
+            selUser = selectionOfUser.Teacher;
 
         }
 
@@ -81,19 +110,48 @@ namespace WinLogin
             textBoxFIO.Visibility = Visibility.Collapsed;
             textBoxGroup.Visibility = Visibility.Collapsed;
             textBoxLogin.Visibility = Visibility.Collapsed;
-            textBoxPasswordTech.Visibility = Visibility.Collapsed;
-            textBoxPasswordAdm.Visibility = Visibility.Visible;
+            passwordBoxTech.Visibility = Visibility.Collapsed;
+            passwordBoxAdm.Visibility = Visibility.Visible;
             buttonLogin.Visibility = Visibility.Visible;
+
+            buttonStudent.Background = defaultColor_buttonStudent;
+            buttonTeacher.Background = defaultColor_buttonTeacher;
+            buttonAdmin.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90);
+
+            ClearFields();
+            selUser = selectionOfUser.Admin;
 
         }
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
+            switch (selUser)
+            {
+                case selectionOfUser.Student:
+                    MessageBox.Show("Student");
 
-            MessageBox.Show("It is work!");
-            
+                    break;
+                case selectionOfUser.Teacher:
+                    MessageBox.Show("Teacher");
 
+                    break;
+                case selectionOfUser.Admin:
+                    MessageBox.Show("Admin");
 
+                    break;
+                default:
+                    MessageBox.Show("Вы не выбрали роль!");
+                    break;
+            }                         
+        }
+
+        private void ClearFields()  
+        {
+            textBoxFIO.Text = "";
+            textBoxGroup.Text = "";
+            textBoxLogin.Text = "";
+            passwordBoxTech.Password = "";
+            passwordBoxAdm.Password = "";
         }
     }
 }
