@@ -20,6 +20,8 @@ namespace WinLogin
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         System.Windows.Media.Brush defaultColor_buttonStudent;  // Сохратить фон кнопки buttonStudent по умолчанию
         System.Windows.Media.Brush defaultColor_buttonTeacher;  // Сохратить фон кнопки buttonTeacher по умолчанию
         System.Windows.Media.Brush defaultColor_buttonAdmin;    // Сохратить фон кнопки buttonAdmin по умолчанию
@@ -128,15 +130,21 @@ namespace WinLogin
             switch (selUser)
             {
                 case selectionOfUser.Student:
-                    MessageBox.Show("Student");
+                    //MessageBox.Show("Student");
+                    WinStudent NewWinStudent = new WinStudent();                    
+                    NewWinStudent.ShowDialog();
 
                     break;
                 case selectionOfUser.Teacher:
-                    MessageBox.Show("Teacher");
+                    //MessageBox.Show("Teacher");
+                    WinTeacher NewWinTeacher = new WinTeacher();
+                    NewWinTeacher.ShowDialog();
 
                     break;
                 case selectionOfUser.Admin:
-                    MessageBox.Show("Admin");
+                    //MessageBox.Show("Admin");
+
+                    
 
                     break;
                 default:
