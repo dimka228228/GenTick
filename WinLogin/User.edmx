@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ExamTicket_dbModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id_category" />
+          </Key>
+          <Property Name="id_category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_category" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_subject_cat" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="id_group" />
+          </Key>
+          <Property Name="id_group" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_group" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogStudents">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_stud" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_group_st" Type="int" Nullable="false" />
+          <Property Name="date_exam" Type="date" Nullable="false" />
+          <Property Name="id_subject_log" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="id_question" />
+          </Key>
+          <Property Name="id_question" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_subject_ques" Type="int" Nullable="false" />
+          <Property Name="id_category_ques" Type="int" Nullable="false" />
+          <Property Name="text_quesation" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pathToPicture" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="SubjectOfTeacher">
+          <Key>
+            <PropertyRef Name="id_sot" />
+          </Key>
+          <Property Name="id_sot" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_teacher_sot" Type="int" Nullable="false" />
+          <Property Name="id_subject_sot" Type="int" Nullable="false" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="id_subject" />
+          </Key>
+          <Property Name="id_subject" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_subject" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="id_teacher" />
+          </Key>
+          <Property Name="id_teacher" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_tch" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="login_tch" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password_tch" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Categories_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="id_subject_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogStudents_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="LogStudents" Type="Self.LogStudents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id_group" />
+            </Principal>
+            <Dependent Role="LogStudents">
+              <PropertyRef Name="id_group_st" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogStudents_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="LogStudents" Type="Self.LogStudents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="LogStudents">
+              <PropertyRef Name="id_subject_log" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id_category" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="id_category_ques" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="id_subject_ques" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectOfTeacher_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="SubjectOfTeacher" Type="Self.SubjectOfTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="SubjectOfTeacher">
+              <PropertyRef Name="id_subject_sot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectOfTeacher_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="SubjectOfTeacher" Type="Self.SubjectOfTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="id_teacher" />
+            </Principal>
+            <Dependent Role="SubjectOfTeacher">
+              <PropertyRef Name="id_teacher_sot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ExamTicket_dbModelContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogStudents" EntityType="Self.LogStudents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubjectOfTeacher" EntityType="Self.SubjectOfTeacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Categories_Subjects" Association="Self.FK_Categories_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogStudents_Groups" Association="Self.FK_LogStudents_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="LogStudents" EntitySet="LogStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogStudents_Subjects" Association="Self.FK_LogStudents_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="LogStudents" EntitySet="LogStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Categories" Association="Self.FK_Questions_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Subjects" Association="Self.FK_Questions_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectOfTeacher_Subjects" Association="Self.FK_SubjectOfTeacher_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectOfTeacher" EntitySet="SubjectOfTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectOfTeacher_Teachers" Association="Self.FK_SubjectOfTeacher_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="SubjectOfTeacher" EntitySet="SubjectOfTeacher" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExamTicket_dbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="id_category" />
+          </Key>
+          <Property Name="id_category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_category" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_subject_cat" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_Categories_Subjects" FromRole="Categories" ToRole="Subjects" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Categories" FromRole="Categories" ToRole="Questions" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="id_group" />
+          </Key>
+          <Property Name="id_group" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_group" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LogStudents" Relationship="Self.FK_LogStudents_Groups" FromRole="Groups" ToRole="LogStudents" />
+        </EntityType>
+        <EntityType Name="LogStudents">
+          <Key>
+            <PropertyRef Name="id_log" />
+          </Key>
+          <Property Name="id_log" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_stud" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_group_st" Type="Int32" Nullable="false" />
+          <Property Name="date_exam" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="id_subject_log" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK_LogStudents_Groups" FromRole="LogStudents" ToRole="Groups" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_LogStudents_Subjects" FromRole="LogStudents" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="id_question" />
+          </Key>
+          <Property Name="id_question" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_subject_ques" Type="Int32" Nullable="false" />
+          <Property Name="id_category_ques" Type="Int32" Nullable="false" />
+          <Property Name="text_quesation" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pathToPicture" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Questions_Categories" FromRole="Questions" ToRole="Categories" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_Questions_Subjects" FromRole="Questions" ToRole="Subjects" />
+        </EntityType>
+        <EntityType Name="SubjectOfTeacher">
+          <Key>
+            <PropertyRef Name="id_sot" />
+          </Key>
+          <Property Name="id_sot" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_teacher_sot" Type="Int32" Nullable="false" />
+          <Property Name="id_subject_sot" Type="Int32" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Subjects" Relationship="Self.FK_SubjectOfTeacher_Subjects" FromRole="SubjectOfTeacher" ToRole="Subjects" />
+          <NavigationProperty Name="Teachers" Relationship="Self.FK_SubjectOfTeacher_Teachers" FromRole="SubjectOfTeacher" ToRole="Teachers" />
+        </EntityType>
+        <EntityType Name="Subjects">
+          <Key>
+            <PropertyRef Name="id_subject" />
+          </Key>
+          <Property Name="id_subject" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_subject" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_Subjects" FromRole="Subjects" ToRole="Categories" />
+          <NavigationProperty Name="LogStudents" Relationship="Self.FK_LogStudents_Subjects" FromRole="Subjects" ToRole="LogStudents" />
+          <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Subjects" FromRole="Subjects" ToRole="Questions" />
+          <NavigationProperty Name="SubjectOfTeacher" Relationship="Self.FK_SubjectOfTeacher_Subjects" FromRole="Subjects" ToRole="SubjectOfTeacher" />
+        </EntityType>
+        <EntityType Name="Teachers">
+          <Key>
+            <PropertyRef Name="id_teacher" />
+          </Key>
+          <Property Name="id_teacher" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_tch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="login_tch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_tch" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SubjectOfTeacher" Relationship="Self.FK_SubjectOfTeacher_Teachers" FromRole="Teachers" ToRole="SubjectOfTeacher" />
+        </EntityType>
+        <Association Name="FK_Categories_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="id_subject_cat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="id_category" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="id_category_ques" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogStudents_Groups">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="LogStudents" Type="Self.LogStudents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="id_group" />
+            </Principal>
+            <Dependent Role="LogStudents">
+              <PropertyRef Name="id_group_st" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogStudents_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="LogStudents" Type="Self.LogStudents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="LogStudents">
+              <PropertyRef Name="id_subject_log" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Questions_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="Questions" Type="Self.Questions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="Questions">
+              <PropertyRef Name="id_subject_ques" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectOfTeacher_Subjects">
+          <End Role="Subjects" Type="Self.Subjects" Multiplicity="1" />
+          <End Role="SubjectOfTeacher" Type="Self.SubjectOfTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subjects">
+              <PropertyRef Name="id_subject" />
+            </Principal>
+            <Dependent Role="SubjectOfTeacher">
+              <PropertyRef Name="id_subject_sot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubjectOfTeacher_Teachers">
+          <End Role="Teachers" Type="Self.Teachers" Multiplicity="1" />
+          <End Role="SubjectOfTeacher" Type="Self.SubjectOfTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teachers">
+              <PropertyRef Name="id_teacher" />
+            </Principal>
+            <Dependent Role="SubjectOfTeacher">
+              <PropertyRef Name="id_teacher_sot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExamTicket_dbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Categories" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" />
+          <EntitySet Name="LogStudents" EntityType="Self.LogStudents" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" />
+          <EntitySet Name="SubjectOfTeacher" EntityType="Self.SubjectOfTeacher" />
+          <EntitySet Name="Subjects" EntityType="Self.Subjects" />
+          <EntitySet Name="Teachers" EntityType="Self.Teachers" />
+          <AssociationSet Name="FK_Categories_Subjects" Association="Self.FK_Categories_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Categories" Association="Self.FK_Questions_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogStudents_Groups" Association="Self.FK_LogStudents_Groups">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="LogStudents" EntitySet="LogStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogStudents_Subjects" Association="Self.FK_LogStudents_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="LogStudents" EntitySet="LogStudents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Questions_Subjects" Association="Self.FK_Questions_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectOfTeacher_Subjects" Association="Self.FK_SubjectOfTeacher_Subjects">
+            <End Role="Subjects" EntitySet="Subjects" />
+            <End Role="SubjectOfTeacher" EntitySet="SubjectOfTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubjectOfTeacher_Teachers" Association="Self.FK_SubjectOfTeacher_Teachers">
+            <End Role="Teachers" EntitySet="Teachers" />
+            <End Role="SubjectOfTeacher" EntitySet="SubjectOfTeacher" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ExamTicket_dbModelContainer" CdmEntityContainer="ExamTicket_dbEntities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="id_category" ColumnName="id_category" />
+                <ScalarProperty Name="name_category" ColumnName="name_category" />
+                <ScalarProperty Name="id_subject_cat" ColumnName="id_subject_cat" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.Groups">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="id_group" ColumnName="id_group" />
+                <ScalarProperty Name="name_group" ColumnName="name_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogStudents">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.LogStudents">
+              <MappingFragment StoreEntitySet="LogStudents">
+                <ScalarProperty Name="id_log" ColumnName="id_log" />
+                <ScalarProperty Name="name_stud" ColumnName="name_stud" />
+                <ScalarProperty Name="id_group_st" ColumnName="id_group_st" />
+                <ScalarProperty Name="date_exam" ColumnName="date_exam" />
+                <ScalarProperty Name="id_subject_log" ColumnName="id_subject_log" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.Questions">
+              <MappingFragment StoreEntitySet="Questions">
+                <ScalarProperty Name="id_question" ColumnName="id_question" />
+                <ScalarProperty Name="id_subject_ques" ColumnName="id_subject_ques" />
+                <ScalarProperty Name="id_category_ques" ColumnName="id_category_ques" />
+                <ScalarProperty Name="text_quesation" ColumnName="text_quesation" />
+                <ScalarProperty Name="pathToPicture" ColumnName="pathToPicture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubjectOfTeacher">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.SubjectOfTeacher">
+              <MappingFragment StoreEntitySet="SubjectOfTeacher">
+                <ScalarProperty Name="id_sot" ColumnName="id_sot" />
+                <ScalarProperty Name="id_teacher_sot" ColumnName="id_teacher_sot" />
+                <ScalarProperty Name="id_subject_sot" ColumnName="id_subject_sot" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.Subjects">
+              <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="id_subject" ColumnName="id_subject" />
+                <ScalarProperty Name="name_subject" ColumnName="name_subject" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="ExamTicket_dbModel.Teachers">
+              <MappingFragment StoreEntitySet="Teachers">
+                <ScalarProperty Name="id_teacher" ColumnName="id_teacher" />
+                <ScalarProperty Name="name_tch" ColumnName="name_tch" />
+                <ScalarProperty Name="login_tch" ColumnName="login_tch" />
+                <ScalarProperty Name="password_tch" ColumnName="password_tch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -25,6 +25,13 @@ namespace WinLogin
 
             textBoxFIO.IsReadOnly = true;
 
+            using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
+            {
+                var users = db.Groups;
+                foreach (Groups u in users)
+                    comboBoxGroup.Items.Add(u.name_group);
+            }
+
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)

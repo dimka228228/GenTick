@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Entity;
+using System.Linq;
 
 namespace WinLogin
 {
@@ -22,6 +24,10 @@ namespace WinLogin
         public WinTeacher()
         {
             InitializeComponent();
+
+            ExamTicket_dbEntities be = new ExamTicket_dbEntities();
+            be.Teachers.Load();
+            dataGridTeacher.ItemsSource = be.Teachers.Local.ToBindingList();
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)

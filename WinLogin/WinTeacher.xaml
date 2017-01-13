@@ -39,14 +39,17 @@
         <Button x:Name="buttonLogin_Copy1" Content="Редактировать вопрос" Grid.Column="1" HorizontalAlignment="Left" Margin="0,60,0,0" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" />
         <Button x:Name="buttonLogin_Copy2" Content="Удалить вопрос" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" Margin="0,107,0,0"/>
         <Button x:Name="buttonExit" Content="Закрыть" Grid.Column="2" HorizontalAlignment="Left" Margin="249,5,0,0" Grid.Row="7" VerticalAlignment="Top" Width="72" Height="22" Click="buttonExit_Click"/>
-        <ListView Grid.Column="2" HorizontalAlignment="Left" Height="127" Margin="10,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="311">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-
+        <DataGrid Name="dataGridTeacher" Grid.Row="6" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Grid.Column="2" Margin="0,1,20,10">
+            <DataGrid.Effect>
+                <DropShadowEffect/>
+            </DataGrid.Effect>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="idColumn" Header="Id" Binding="{Binding id_teacher}" Width="30"/>
+                <DataGridTextColumn x:Name="categoryColumn" Header="Имя" Binding="{Binding name_tch}" Width="*"/>
+                <DataGridTextColumn x:Name="loginColumn" Header="Логин" Binding="{Binding login_tch}" Width="30"/>
+                <DataGridTextColumn x:Name="passwordColumn" Header="Пароль" Binding="{Binding password_tch}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>

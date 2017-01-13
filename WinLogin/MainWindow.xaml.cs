@@ -44,7 +44,7 @@ namespace WinLogin
             labelPasswordTech.Visibility = Visibility.Collapsed;
             labelPasswordAdm.Visibility = Visibility.Collapsed;
             textBoxFIO.Visibility = Visibility.Collapsed;
-            textBoxGroup.Visibility = Visibility.Collapsed;
+            comboBoxGroup.Visibility = Visibility.Collapsed;
             textBoxLogin.Visibility = Visibility.Collapsed;
             passwordBoxTech.Visibility = Visibility.Collapsed;
             passwordBoxAdm.Visibility = Visibility.Collapsed;
@@ -54,6 +54,13 @@ namespace WinLogin
             defaultColor_buttonStudent = buttonStudent.Background;
             defaultColor_buttonTeacher = buttonTeacher.Background;
             defaultColor_buttonAdmin = buttonAdmin.Background;
+
+            using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
+            {
+                var users = db.Groups;
+                foreach (Groups u in users)
+                    comboBoxGroup.Items.Add(u.name_group);
+            }
         }
 
         private void buttonStudent_Click(object sender, RoutedEventArgs e)
@@ -65,7 +72,7 @@ namespace WinLogin
             labelPasswordTech.Visibility = Visibility.Collapsed;
             labelPasswordAdm.Visibility = Visibility.Collapsed;
             textBoxFIO.Visibility = Visibility.Visible;
-            textBoxGroup.Visibility = Visibility.Visible;
+            comboBoxGroup.Visibility = Visibility.Visible;
             textBoxLogin.Visibility = Visibility.Collapsed;
             passwordBoxTech.Visibility = Visibility.Collapsed;
             passwordBoxAdm.Visibility = Visibility.Collapsed;
@@ -94,7 +101,7 @@ namespace WinLogin
             labelPasswordTech.Visibility = Visibility.Visible;
             labelPasswordAdm.Visibility = Visibility.Collapsed;
             textBoxFIO.Visibility = Visibility.Collapsed;
-            textBoxGroup.Visibility = Visibility.Collapsed;
+            comboBoxGroup.Visibility = Visibility.Collapsed;
             textBoxLogin.Visibility = Visibility.Visible;
             passwordBoxTech.Visibility = Visibility.Visible;
             passwordBoxAdm.Visibility = Visibility.Collapsed;
@@ -123,7 +130,7 @@ namespace WinLogin
             labelPasswordTech.Visibility = Visibility.Collapsed;
             labelPasswordAdm.Visibility = Visibility.Visible;
             textBoxFIO.Visibility = Visibility.Collapsed;
-            textBoxGroup.Visibility = Visibility.Collapsed;
+            comboBoxGroup.Visibility = Visibility.Collapsed;
             textBoxLogin.Visibility = Visibility.Collapsed;
             passwordBoxTech.Visibility = Visibility.Collapsed;
             passwordBoxAdm.Visibility = Visibility.Visible;
@@ -177,7 +184,6 @@ namespace WinLogin
         private void ClearFields()  
         {
             textBoxFIO.Text = "";
-            textBoxGroup.Text = "";
             textBoxLogin.Text = "";
             passwordBoxTech.Password = "";
             passwordBoxAdm.Password = "";

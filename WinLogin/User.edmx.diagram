@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8476cd1af9134954ac2e1b6d47db8832" Name="Diagram1" ZoomLevel="114">
+        <EntityTypeShape EntityType="ExamTicket_dbModel.Categories" Width="1.5" PointX="0.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamTicket_dbModel.Groups" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamTicket_dbModel.LogStudents" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamTicket_dbModel.Questions" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamTicket_dbModel.SubjectOfTeacher" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamTicket_dbModel.Subjects" Width="1.5" PointX="3.375" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamTicket_dbModel.Teachers" Width="1.5" PointX="1.375" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_Categories_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_Questions_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_LogStudents_Groups" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_LogStudents_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_Questions_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_SubjectOfTeacher_Subjects" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamTicket_dbModel.FK_SubjectOfTeacher_Teachers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
