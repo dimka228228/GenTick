@@ -1,0 +1,45 @@
+﻿<Window x:Class="WinLogin.WinAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Генератор билетов" Height="350" Width="580
+        " WindowStartupLocation="CenterScreen" Icon="bookcase.png" ResizeMode="NoResize">
+    <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Margin="-4,2,-2,-2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition Height="40*" ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="94*"></ColumnDefinition>
+            <ColumnDefinition Width="63*"/>
+            <ColumnDefinition Width="133*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFF3F5F7" FontSize="16" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Padding="30,10,0,10" Height="40" Grid.ColumnSpan="3" >
+               Администратор
+        </TextBlock>
+
+        <Button Name="buttonAddTeacher" Grid.Column="0" Grid.Row="1" Margin="20,17,20,23"  Grid.RowSpan="2" Click="buttonAddTeacher_Click" >Добавить преподавателя</Button>
+        <Button Name="buttonEditing" Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Margin="20,18,21,22" Click="buttonEditing_Click"  >Редактировать</Button>
+        <Button Name="buttonDeleteTeacher" Grid.Column="0" Grid.Row="5" Margin="20,17,20,23" Grid.RowSpan="2" Click="buttonDeleteTeacher_Click" >Удалить преподавателя</Button>
+
+        <Label Name="labelFIO_tech" Content="ФИО:" Grid.Column="1" Grid.Row="2" Margin="1,7,29,0" Height="30" VerticalAlignment="Top"/>
+        <TextBox Name="textBoxFIO"  Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,8,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="223"/>
+        <TextBox Name="textBoxLogin" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,6,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="223"/>
+        <TextBox Name="textBoxPassword" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="11,7,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="222"/>
+        <Label Name="labelLogin_teach" Content="Логин:" Grid.Column="1" HorizontalAlignment="Left" Margin="1,7,0,0" Grid.Row="3" VerticalAlignment="Top" Height="26" Width="61"/>
+        <Label Name="labelPasswordTech" Content="Пароль:" Grid.Column="1" HorizontalAlignment="Left" Margin="1,6,0,0" Grid.Row="4" VerticalAlignment="Top" Height="26" Width="70"/>
+        <Button Name="buttonOk" Content="Ок" Grid.Column="2" HorizontalAlignment="Left" Margin="161,0,0,0" Grid.Row="7" VerticalAlignment="Top" Width="72" Height="22" Click="buttonOk_Click"/>
+        <TextBox x:Name="textBoxAddSubject" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="11,8,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="222"/>
+        <Label x:Name="labelTeachers" Content="Преподаватели:" Grid.Column="1" Grid.Row="1" Margin="1,6,0,0" Height="30" VerticalAlignment="Top"/>
+        <ComboBox Name="comboBoxTechers" HorizontalAlignment="Left" Margin="10,6,0,0" Grid.Row="1" VerticalAlignment="Top" Width="223" Height="22" Grid.Column="2"/>
+        <Label x:Name="labelAddTeacher" Content="Добавить предмет" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top" Height="26" Width="126" Margin="0,8,0,0"/>
+
+
+    </Grid>
+</Window>
