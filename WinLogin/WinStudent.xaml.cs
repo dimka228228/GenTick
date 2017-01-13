@@ -24,8 +24,6 @@ namespace WinLogin
             InitializeComponent();
 
             textBoxFIO.IsReadOnly = true;
-            textBoxGroup.IsReadOnly = true;
-            textBoxSubject.IsReadOnly = true;
 
         }
 

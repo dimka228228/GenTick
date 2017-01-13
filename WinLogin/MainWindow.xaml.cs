@@ -48,7 +48,8 @@ namespace WinLogin
             textBoxLogin.Visibility = Visibility.Collapsed;
             passwordBoxTech.Visibility = Visibility.Collapsed;
             passwordBoxAdm.Visibility = Visibility.Collapsed;
-            //buttonLogin.Visibility = Visibility.Collapsed;
+            labelLoginAmd.Visibility = Visibility.Collapsed;
+            textBoxLoginAmd.Visibility = Visibility.Collapsed;
 
             defaultColor_buttonStudent = buttonStudent.Background;
             defaultColor_buttonTeacher = buttonTeacher.Background;
@@ -69,10 +70,16 @@ namespace WinLogin
             passwordBoxTech.Visibility = Visibility.Collapsed;
             passwordBoxAdm.Visibility = Visibility.Collapsed;
             buttonLogin.Visibility = Visibility.Visible;
+            labelLoginAmd.Visibility = Visibility.Collapsed;
+            textBoxLoginAmd.Visibility = Visibility.Collapsed;
 
             buttonStudent.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90);
-            buttonTeacher.Background = defaultColor_buttonTeacher;
-            buttonAdmin.Background = defaultColor_buttonAdmin;
+            buttonTeacher.Background = defaultColor_buttonTeacher;            
+            buttonAdmin.Background = defaultColor_buttonAdmin;            
+
+            buttonStudent.Opacity = 1.0;
+            buttonTeacher.Opacity = 0.5;
+            buttonAdmin.Opacity = 0.5;
 
             ClearFields();
             selUser = selectionOfUser.Student;
@@ -92,10 +99,16 @@ namespace WinLogin
             passwordBoxTech.Visibility = Visibility.Visible;
             passwordBoxAdm.Visibility = Visibility.Collapsed;
             buttonLogin.Visibility = Visibility.Visible;
+            labelLoginAmd.Visibility = Visibility.Collapsed;
+            textBoxLoginAmd.Visibility = Visibility.Collapsed;
 
             buttonStudent.Background = defaultColor_buttonStudent;
             buttonTeacher.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90); 
             buttonAdmin.Background = defaultColor_buttonAdmin;
+
+            buttonStudent.Opacity = 0.5;
+            buttonTeacher.Opacity = 1.0;
+            buttonAdmin.Opacity = 0.5;
 
             ClearFields();
             selUser = selectionOfUser.Teacher;
@@ -115,10 +128,16 @@ namespace WinLogin
             passwordBoxTech.Visibility = Visibility.Collapsed;
             passwordBoxAdm.Visibility = Visibility.Visible;
             buttonLogin.Visibility = Visibility.Visible;
+            labelLoginAmd.Visibility = Visibility.Visible;
+            textBoxLoginAmd.Visibility = Visibility.Visible;
 
             buttonStudent.Background = defaultColor_buttonStudent;
             buttonTeacher.Background = defaultColor_buttonTeacher;
             buttonAdmin.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90);
+
+            buttonStudent.Opacity = 0.5;
+            buttonTeacher.Opacity = 0.5;
+            buttonAdmin.Opacity = 1.0;
 
             ClearFields();
             selUser = selectionOfUser.Admin;
@@ -143,12 +162,14 @@ namespace WinLogin
                     break;
                 case selectionOfUser.Admin:
                     //MessageBox.Show("Admin");
+                    WinAdmin NewWinAdmin = new WinAdmin();
+                    NewWinAdmin.ShowDialog();
 
                     
 
                     break;
                 default:
-                    MessageBox.Show("Вы не выбрали роль!");
+                    MessageBox.Show("Вы не выбрали роль!", "Ошибка!");
                     break;
             }                         
         }
@@ -160,6 +181,7 @@ namespace WinLogin
             textBoxLogin.Text = "";
             passwordBoxTech.Password = "";
             passwordBoxAdm.Password = "";
+            textBoxLoginAmd.Text = "";
         }
     }
 }

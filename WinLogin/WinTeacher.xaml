@@ -15,25 +15,25 @@
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="34*"></ColumnDefinition>
-            <ColumnDefinition Width="136*"/>
-            <ColumnDefinition Width="355*"/>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="48*"/>
+            <ColumnDefinition Width="119*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFF3F5F7" FontSize="16" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Padding="35,10,0,10" Height="40" Grid.ColumnSpan="3" >
                Преподаватель
         </TextBlock>
 
-        <Label Name="labelFIO" Content="ФИО:" Grid.Column="1" Grid.Row="1" Margin="40,8,0,0" Height="30" VerticalAlignment="Top" Grid.RowSpan="2"/>
+        <Label Name="labelFIO" Content="ФИО:" Grid.Column="1" Grid.Row="1" Margin="0,8,1,0" Height="30" VerticalAlignment="Top" Grid.RowSpan="2"/>
         <TextBox Name="textBoxFIO"  Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
         <TextBox Name="textBoxLogin" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,9,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
-        <Label Name="labelLogin" Content="Логин:" Grid.Column="1" HorizontalAlignment="Left" Margin="40,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="51"/>
+        <Label Name="labelLogin" Content="Логин:" Grid.Column="1" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
         <Button Name="buttonLogin" Content="Ок" Grid.Column="2" HorizontalAlignment="Left" Margin="277,7,0,0" Grid.Row="5" VerticalAlignment="Top" Width="44" Height="22" />
-        <Label x:Name="labelLogin_Copy" Content="Предметы" Grid.Column="1" HorizontalAlignment="Left" Margin="40,6,0,0" Grid.Row="3" VerticalAlignment="Top" Height="26" Width="63"/>
+        <Label x:Name="labelLogin_Copy" Content="Предметы" Grid.Column="1" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="3" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
         <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="311" Height="22"/>
-        <Label x:Name="labelLogin_Copy1" Content="Категория" Grid.Column="1" HorizontalAlignment="Left" Margin="40,5,0,0" Grid.Row="4" VerticalAlignment="Top" Height="26" Width="63"/>
+        <Label x:Name="labelLogin_Copy1" Content="Категория" Grid.Column="1" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="4" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
         <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="311" Height="22"/>
-        <Label x:Name="labelLogin_Copy2" Content="Поиск" Grid.Column="1" HorizontalAlignment="Left" Margin="40,6,0,0" Grid.Row="5" VerticalAlignment="Top" Height="26" Width="63"/>
+        <Label x:Name="labelLogin_Copy2" Content="Поиск" Grid.Column="1" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="5" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
         <TextBox x:Name="textBoxLogin_Copy" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,7,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="256"/>
         <Button x:Name="buttonLogin_Copy" Content="Добавить вопрос" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" Margin="0,10,0,0"/>
         <Button x:Name="buttonLogin_Copy1" Content="Редактировать вопрос" Grid.Column="1" HorizontalAlignment="Left" Margin="0,60,0,0" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" />
