@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace WinLogin
 {
@@ -19,72 +20,62 @@ namespace WinLogin
     /// </summary>
     public partial class WinAdmin : Window
     {
+        ExamTicket_dbEntities db;
         public WinAdmin()
         {
             InitializeComponent();
-
-            labelFIO_tech.Visibility = Visibility.Collapsed;
-            labelLogin_teach.Visibility = Visibility.Collapsed;
-            labelPasswordTech.Visibility = Visibility.Collapsed;
-            labelTeachers.Visibility = Visibility.Collapsed;
-            labelAddTeacher.Visibility = Visibility.Collapsed;
-
-            textBoxFIO.Visibility = Visibility.Collapsed;
-            textBoxLogin.Visibility = Visibility.Collapsed;
-            textBoxPassword.Visibility = Visibility.Collapsed;
-            textBoxAddSubject.Visibility = Visibility.Collapsed;      
-            comboBoxTechers.Visibility = Visibility.Collapsed;
-
         }
 
-        private void buttonOk_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            db = new ExamTicket_dbEntities();
+            Load();
+        }
+        private void Load()
+        {
+            db.Teachers.Load();
+            dataGrid_teachers.ItemsSource = db.Teachers.Local.ToBindingList();
+        }
+        private void Save()
+        {
+            db.SaveChanges();
+            Load();
+        }
+        private void Add_Teacher_Click(object sender, RoutedEventArgs e)
+        {
+            Teachers tch = new Teachers();
+            int id = db.Teachers.Select(t => t.id_teacher).Max() + 1;
+            tch.id_teacher = id;
+            db.Teachers.Add(tch);
+            dataGrid_teachers.SelectedIndex = dataGrid_teachers.Items.Count - 1;
         }
 
-        private void buttonAddTeacher_Click(object sender, RoutedEventArgs e)
+        private void Save_Teacher_Click(object sender, RoutedEventArgs e)
         {
-            labelFIO_tech.Visibility = Visibility.Visible;
-            labelLogin_teach.Visibility = Visibility.Visible;
-            labelPasswordTech.Visibility = Visibility.Visible;
-            labelTeachers.Visibility = Visibility.Visible;
-            labelAddTeacher.Visibility = Visibility.Visible;
-
-            textBoxFIO.Visibility = Visibility.Visible;
-            textBoxLogin.Visibility = Visibility.Visible;
-            textBoxPassword.Visibility = Visibility.Visible;
-            textBoxAddSubject.Visibility = Visibility.Visible;
-            comboBoxTechers.Visibility = Visibility.Collapsed;
+            Save();
         }
 
-        private void buttonEditing_Click(object sender, RoutedEventArgs e)
+        private void Del_Teacher_Click(object sender, RoutedEventArgs e)
         {
-            labelFIO_tech.Visibility = Visibility.Collapsed;
-            labelLogin_teach.Visibility = Visibility.Collapsed;
-            labelPasswordTech.Visibility = Visibility.Collapsed;
-            labelTeachers.Visibility = Visibility.Collapsed;
-            labelAddTeacher.Visibility = Visibility.Collapsed;
-
-            textBoxFIO.Visibility = Visibility.Collapsed;
-            textBoxLogin.Visibility = Visibility.Collapsed;
-            textBoxPassword.Visibility = Visibility.Collapsed;
-            textBoxAddSubject.Visibility = Visibility.Collapsed;
-            comboBoxTechers.Visibility = Visibility.Collapsed;
+            if (MessageBox.Show("Вы действительно хотите удалить запись?", "Сообщение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                db.Teachers.Remove((Teachers)dataGrid_teachers.SelectedItem);
+                Save();
+            }
         }
 
-        private void buttonDeleteTeacher_Click(object sender, RoutedEventArgs e)
+        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            labelFIO_tech.Visibility = Visibility.Collapsed;
-            labelLogin_teach.Visibility = Visibility.Collapsed;
-            labelPasswordTech.Visibility = Visibility.Collapsed;
-            labelTeachers.Visibility = Visibility.Collapsed;
-            labelAddTeacher.Visibility = Visibility.Collapsed;
-
-            textBoxFIO.Visibility = Visibility.Collapsed;
-            textBoxLogin.Visibility = Visibility.Collapsed;
-            textBoxPassword.Visibility = Visibility.Collapsed;
-            textBoxAddSubject.Visibility = Visibility.Collapsed;
-            comboBoxTechers.Visibility = Visibility.Visible;
+            //Поиск
+            if (Search_cat.Text != "")
+            {
+                dataGrid_teachers.ItemsSource = db.Teachers.Where(t => t.name_tch.Contains(Search_cat.Text)).ToList();
+                //dataGrid_teachers.ItemsSource = db.Teachers.Where(t => t.login_tch.Contains(Search_cat.Text)).ToList();
+                //dataGrid_teachers.ItemsSource = db.Teachers.Where(t => t.password_tch.Contains(Search_cat.Text)).ToList();
+            }                
+            else
+                dataGrid_teachers.ItemsSource = db.Teachers.Local.ToBindingList();
+            //Поиск
         }
     }
 }

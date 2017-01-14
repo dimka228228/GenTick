@@ -18,6 +18,17 @@ namespace WinLogin
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
+    /// 
+    static class GlobalVariables
+    {
+        //public static string FIO_student { get; set; }
+        //public static string group_student = "+++";
+        //public static string login_teacher = "+++";
+        //public static string password_teacher = "+++";
+        //public static string login_admin = "+++";
+        //public static string password_admin = "+++";
+    }  
+    
     public partial class MainWindow : Window
     {
         
@@ -90,7 +101,6 @@ namespace WinLogin
 
             ClearFields();
             selUser = selectionOfUser.Student;
-
         }
 
         private void buttonTeacher_Click(object sender, RoutedEventArgs e)
@@ -153,32 +163,48 @@ namespace WinLogin
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
-            switch (selUser)
-            {
-                case selectionOfUser.Student:
-                    //MessageBox.Show("Student");
-                    WinStudent NewWinStudent = new WinStudent();                    
-                    NewWinStudent.ShowDialog();
+            // Проверка на введения значений в поля 
 
-                    break;
-                case selectionOfUser.Teacher:
-                    //MessageBox.Show("Teacher");
-                    WinTeacher NewWinTeacher = new WinTeacher();
-                    NewWinTeacher.ShowDialog();
 
-                    break;
-                case selectionOfUser.Admin:
-                    //MessageBox.Show("Admin");
-                    WinAdmin NewWinAdmin = new WinAdmin();
-                    NewWinAdmin.ShowDialog();
+                switch (selUser)
+                {
+                    case selectionOfUser.Student:
 
-                    
+                        if (textBoxFIO.Text == "" || comboBoxGroup.SelectedIndex == -1)
+                        {
+                            MessageBox.Show("Вы не заполнили и (или) не выбрали все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            WinStudent NewWinStudent = new WinStudent();
+                            NewWinStudent.textBoxFIO.Text = this.textBoxFIO.Text;
+                            NewWinStudent.textBoxGroup.Text = (string)this.comboBoxGroup.SelectedValue;
+                            NewWinStudent.ShowDialog();
+                        }
+                        break;
 
-                    break;
-                default:
-                    MessageBox.Show("Вы не выбрали роль!", "Ошибка!");
-                    break;
-            }                         
+                    case selectionOfUser.Teacher:
+
+
+
+                        WinTeacher NewWinTeacher = new WinTeacher();
+                        NewWinTeacher.ShowDialog();
+
+                        break;
+
+                    case selectionOfUser.Admin:
+
+
+                        WinAdmin NewWinAdmin = new WinAdmin();
+                        NewWinAdmin.ShowDialog();
+
+
+
+                        break;
+                    default:
+                        MessageBox.Show("Вы не выбрали роль!", "Ошибка!");
+                        break;
+                }                                              
         }
 
         private void ClearFields()  

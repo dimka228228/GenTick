@@ -24,14 +24,14 @@ namespace WinLogin
             InitializeComponent();
 
             textBoxFIO.IsReadOnly = true;
+            textBoxGroup.IsReadOnly = true;
 
             using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
             {
-                var users = db.Groups;
-                foreach (Groups u in users)
-                    comboBoxGroup.Items.Add(u.name_group);
+                var sub = db.Subjects;
+                foreach (Subjects u in sub)
+                    comboBoxSubject.Items.Add(u.name_subject);
             }
-
         }
 
         private void buttonExit_Click(object sender, RoutedEventArgs e)
@@ -40,6 +40,11 @@ namespace WinLogin
 
 
             //MessageBox.Show("Hello World!");
+        }
+
+        private void buttonGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Generating ticket...");
         }
     }
 }
