@@ -24,6 +24,8 @@ namespace WinLogin
         public WinAdmin()
         {
             InitializeComponent();
+
+            textBox_id_teacher.IsReadOnly = true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -43,11 +45,13 @@ namespace WinLogin
         }
         private void Add_Teacher_Click(object sender, RoutedEventArgs e)
         {
+            
             Teachers tch = new Teachers();
             int id = db.Teachers.Select(t => t.id_teacher).Max() + 1;
             tch.id_teacher = id;
             db.Teachers.Add(tch);
             dataGrid_teachers.SelectedIndex = dataGrid_teachers.Items.Count - 1;
+
         }
 
         private void Save_Teacher_Click(object sender, RoutedEventArgs e)
@@ -57,7 +61,7 @@ namespace WinLogin
 
         private void Del_Teacher_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы действительно хотите удалить запись?", "Сообщение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Вы действительно хотите удалить запись?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 db.Teachers.Remove((Teachers)dataGrid_teachers.SelectedItem);
                 Save();
