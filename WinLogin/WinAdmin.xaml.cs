@@ -43,19 +43,35 @@ namespace WinLogin
         {
             db.Teachers.Load();
             dataGrid_teachers.ItemsSource = db.Teachers.Local.ToBindingList();
-
-
-
-            //if (tch.id_teacher == sot.id_teacher_sot)
-            //{
-            //    listBox_Subjects_Of_Techers.Items[0] = sot.id_subject_sot;
-            //}
-                
+            dataGrid_Subjects.ItemsSource = db.Teachers.Local.ToBindingList();
+            dataGrid_teachers_subjects.ItemsSource = db.Teachers.Local.ToBindingList();
+            
+///*
+            var subjectList = from tech in db.Teachers
+                              where tech.id_teacher > 2
+                              select new 
+                              {
+                                  id_teacher = tech.id_teacher,
+                                  name_tch = tech.name_tch
+                              };
+//*/
+           // dataGrid_SubjectsOfTeachers.ItemsSource = subjectList;
+           //foreach(var item in subjectList)
+           //    dataGrid_Subjects.ItemsSource 
+           //     MessageBox.Show(item.id_teacher, item.name_tch);
+            
         }
         private void Save_tch()
         {
-            db.SaveChanges();
-            Load_tch();
+            try
+            {
+                db.SaveChanges();
+                Load_tch();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void Add_Teacher_Click(object sender, RoutedEventArgs e)
         {
@@ -133,3 +149,11 @@ namespace WinLogin
         }
     }
 }
+
+
+/*
+use ExamTicket_db
+select Teachers.name_tch, Subjects.name_subject 
+from Subjects, Teachers, SubjectOfTeacher
+where Teachers.id_teacher = 3 and Teachers.id_teacher = id_teacher_sot and id_subject_sot = id_subject
+*/

@@ -66,12 +66,20 @@ namespace WinLogin
             defaultColor_buttonTeacher = buttonTeacher.Background;
             defaultColor_buttonAdmin = buttonAdmin.Background;
 
-            using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
+            try
             {
-                var users = db.Groups;
-                foreach (Groups u in users)
-                    comboBoxGroup.Items.Add(u.name_group);
+                using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
+                {
+                    var users = db.Groups;
+                    foreach (Groups u in users)
+                        comboBoxGroup.Items.Add(u.name_group);
+                }
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void buttonStudent_Click(object sender, RoutedEventArgs e)
