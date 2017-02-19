@@ -12,6 +12,8 @@ namespace WinLogin
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ExamTicket_dbEntities : DbContext
     {
@@ -32,5 +34,14 @@ namespace WinLogin
         public virtual DbSet<SubjectOfTeacher> SubjectOfTeacher { get; set; }
         public virtual DbSet<Subjects> Subjects { get; set; }
         public virtual DbSet<Teachers> Teachers { get; set; }
+    
+        public virtual ObjectResult<output_subject_of_teacher_Result> output_subject_of_teacher(Nullable<int> var_id)
+        {
+            var var_idParameter = var_id.HasValue ?
+                new ObjectParameter("var_id", var_id) :
+                new ObjectParameter("var_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<output_subject_of_teacher_Result>("output_subject_of_teacher", var_idParameter);
+        }
     }
 }

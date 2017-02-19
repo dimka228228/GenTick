@@ -12,12 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace WinLogin
 {
     /// <summary>
     /// Логика взаимодействия для WinAdmin.xaml
     /// </summary>
+    public class SubjectOfTeacherFromDB
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        // другие необходимые свойства
+    }
     public partial class WinAdmin : Window
     {
         ExamTicket_dbEntities db;
@@ -46,19 +53,7 @@ namespace WinLogin
             dataGrid_Subjects.ItemsSource = db.Teachers.Local.ToBindingList();
             dataGrid_teachers_subjects.ItemsSource = db.Teachers.Local.ToBindingList();
             
-///*
-            var subjectList = from tech in db.Teachers
-                              where tech.id_teacher > 2
-                              select new 
-                              {
-                                  id_teacher = tech.id_teacher,
-                                  name_tch = tech.name_tch
-                              };
-//*/
-           // dataGrid_SubjectsOfTeachers.ItemsSource = subjectList;
-           //foreach(var item in subjectList)
-           //    dataGrid_Subjects.ItemsSource 
-           //     MessageBox.Show(item.id_teacher, item.name_tch);
+
             
         }
         private void Save_tch()
@@ -132,6 +127,7 @@ namespace WinLogin
             sub.id_subject = id;
             db.Subjects.Add(sub);
             dataGrid_Subjects.SelectedIndex = dataGrid_Subjects.Items.Count - 1;
+            textBox_subject.Focus();
         }
 
         private void Save_Subject_Click(object sender, RoutedEventArgs e)
@@ -147,7 +143,98 @@ namespace WinLogin
                 Save_sub();
             }
         }
+
+        // Метод, который при нажатии мышки на dataGrid_teachers_subjects выводит
+        // премтеты, которые закреплены за выведеным преподавателнм
+        private void DataGrid_teachers_subjects_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            int selectedColumn = dataGrid_teachers_subjects.CurrentCell.Column.DisplayIndex;
+            if(selectedColumn == 0)
+            {
+                var selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                var id_sub = (cellContent as TextBlock).Text;
+                selectedColumn = 1;
+                selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                var name_sub = (cellContent as TextBlock).Text;
+
+                //MessageBox.Show("id: " + id_sub + " name: " + name_sub, "");
+                QuarySubject(Convert.ToInt32(id_sub));
+            }
+            else if(selectedColumn == 1)
+            {
+                var selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                var name_sub = (cellContent as TextBlock).Text;
+                selectedColumn = 0;
+                selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                var id_sub = (cellContent as TextBlock).Text;
+
+                //MessageBox.Show("id: " + id_sub + " name: " + name_sub, "");
+                QuarySubject(Convert.ToInt32(id_sub));
+            }
+
+            // Загрузка данными listBox_subject_of_teacher из БД
+
+ 
+            
+/*            {
+                var query = (from p1 in db1.Teachers
+                             join p2 in db1.SubjectOfTeacher
+
+                            where p.id_teacher = 
+            }
+*/
+
+            //db = new ExamTicket_dbEntities();
+
+            //var subjectList = from tech in db.Teachers
+            //                  where db.SubjectOfTeacher.id
+            //                  select new
+            //                  {
+            //                      id_teacher = tech.id_teacher,
+            //                      name_tch = tech.name_tch
+            //                  };
+
+
+        }
+        public void QuarySubject(int int_var)
+        {
+            listBox_subject_of_teacher.Items.Clear();
+            try
+            {
+                using (ExamTicket_dbEntities db1 = new ExamTicket_dbEntities())
+                {
+                    //int var_id = 3;
+
+                    //var studentGrades = db1.output_subject_of_teacher("var_id");
+                    //foreach (var student in studentGrades) {
+                    //    MessageBox.Show(student, "");
+
+                    //System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@var_id", 3);
+                    //var query = db1.Database.SqlQuery<SubjectOfTeacherFromDB>("output_subject_of_teacher @var_id", param);
+                    //foreach (var p in query)
+                    //    //listBox_subject_of_teacher.Items.Add(p.Name);
+                    //    MessageBox.Show(p.name, p.id.ToString());
+                    ////Console.WriteLine("{0} - {1}", p.Name, p.Price);
+
+                    IEnumerable<output_subject_of_teacher_Result> query = db1.output_subject_of_teacher(int_var);
+                    foreach (output_subject_of_teacher_Result p in query)
+                        listBox_subject_of_teacher.Items.Add(p.name_subject);
+
+
+                }
+
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show(e1.Message, "Exception stored procedure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
+
 }
 
 

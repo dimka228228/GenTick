@@ -4,17 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="WinLogin.WinAdmin"
         Title="Генератор билетов" Height="500" Width="600" WindowStartupLocation="CenterScreen" Icon="bookcase.png" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Margin="-4,2,-2,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="41*"/>
             <RowDefinition Height="427*"/>
 
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFF3F5F7" FontSize="16" Margin="0,-3,0,0" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Padding="35,10,0,10" Height="40" >
+        <TextBlock Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFF3F5F7" FontSize="16" Margin="0,-3,0,0" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Padding="35,10,0,10" Height="40" Grid.ColumnSpan="2" >
                Администратор
         </TextBlock>
 
-        <TabControl Grid.Column="0" FontWeight="Bold" VerticalAlignment="Top" VerticalContentAlignment="Top" Height="407" Margin="10,10,10,0" Grid.Row="1" Background="#FFD0DBE6">
+        <TabControl Grid.Column="0" FontWeight="Bold" VerticalAlignment="Top" VerticalContentAlignment="Top" Height="407" Margin="10,10,10,0" Grid.Row="1" Background="#FFD0DBE6" Grid.ColumnSpan="2">
             <TabItem Header="Преподавалели" Background="#FF99B4D1">
                 <Grid Margin="10,6,-10,-6" >
                     <Grid.RowDefinitions>
@@ -103,7 +107,7 @@
 
                         <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,0,10,0">
                             <Label Content="Id" Width="73" VerticalAlignment="Center" />
-                            <TextBox Name="textBox_id_subject" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_subject, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="28" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,0,5" Width="459"/>
+                            <TextBox Name="textBox_id_subject" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_subject, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="28" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,0,5" Width="457"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0,0,10,0">
@@ -126,7 +130,7 @@
                         <ColumnDefinition Width="113*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="dataGrid_teachers_subjects" Grid.Row="0" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,10,10,1" Background="#FFE2E9F0" >
+                    <DataGrid x:Name="dataGrid_teachers_subjects" Grid.Row="0" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,10,10,1" Background="#FFE2E9F0" MouseUp="DataGrid_teachers_subjects_MouseUp" >
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="id_teacher_ts" Header="Id" Binding="{Binding id_teacher}" Width="40"/>
                             <DataGridTextColumn x:Name="name_tch_ts" Header="ФИО преподавателя" Binding="{Binding name_tch}" Width="450"/>
@@ -135,7 +139,7 @@
 
                     <StackPanel Grid.Row="1" Margin="0,0,10,0" Orientation="Horizontal">
                         <Label Margin="20,0,0,0">Предметы преподавалеля</Label>
-                        <Label Margin="212,0,0,0">Все предметы</Label>
+                        <Label Margin="208,0,0,0">Все предметы</Label>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2" Margin="0,2,10,10" Orientation="Horizontal">

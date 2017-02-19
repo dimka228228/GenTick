@@ -71,6 +71,9 @@
     <Compile Include="LogStudents.cs">
       <DependentUpon>User.tt</DependentUpon>
     </Compile>
+    <Compile Include="output_subject_of_teacher_Result.cs">
+      <DependentUpon>User.tt</DependentUpon>
+    </Compile>
     <Compile Include="Questions.cs">
       <DependentUpon>User.tt</DependentUpon>
     </Compile>
