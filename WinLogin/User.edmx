@@ -55,6 +55,7 @@
           </Key>
           <Property Name="id_subject" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name_subject" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="quantity_questions_of_tiket" Type="int" />
         </EntityType>
         <EntityType Name="Teachers">
           <Key>
@@ -256,6 +257,7 @@
           <NavigationProperty Name="LogStudents" Relationship="Self.FK_LogStudents_Subjects" FromRole="Subjects" ToRole="LogStudents" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Questions_Subjects" FromRole="Subjects" ToRole="Questions" />
           <NavigationProperty Name="SubjectOfTeacher" Relationship="Self.FK_SubjectOfTeacher_Subjects" FromRole="Subjects" ToRole="SubjectOfTeacher" />
+          <Property Name="quantity_questions_of_tiket" Type="Int32" />
         </EntityType>
         <EntityType Name="Teachers">
           <Key>
@@ -453,6 +455,7 @@
           <EntitySetMapping Name="Subjects">
             <EntityTypeMapping TypeName="ExamTicket_dbModel.Subjects">
               <MappingFragment StoreEntitySet="Subjects">
+                <ScalarProperty Name="quantity_questions_of_tiket" ColumnName="quantity_questions_of_tiket" />
                 <ScalarProperty Name="id_subject" ColumnName="id_subject" />
                 <ScalarProperty Name="name_subject" ColumnName="name_subject" />
               </MappingFragment>

@@ -30,8 +30,10 @@ namespace WinLogin
     }  
     
     public partial class MainWindow : Window
-    {
-        
+    {     
+        //public string loginTeacher = "";
+        //string passwordTeacher = "";
+
 
         System.Windows.Media.Brush defaultColor_buttonStudent;  // Сохратить фон кнопки buttonStudent по умолчанию
         System.Windows.Media.Brush defaultColor_buttonTeacher;  // Сохратить фон кнопки buttonTeacher по умолчанию
@@ -49,6 +51,7 @@ namespace WinLogin
         {
             InitializeComponent();
 
+
             labelFIO.Visibility = Visibility.Collapsed;
             labelGroup.Visibility = Visibility.Collapsed;
             labelLogin.Visibility = Visibility.Collapsed;
@@ -56,15 +59,17 @@ namespace WinLogin
             labelPasswordAdm.Visibility = Visibility.Collapsed;
             textBoxFIO.Visibility = Visibility.Collapsed;
             comboBoxGroup.Visibility = Visibility.Collapsed;
-            textBoxLogin.Visibility = Visibility.Collapsed;
-            passwordBoxTech.Visibility = Visibility.Collapsed;
-            passwordBoxAdm.Visibility = Visibility.Collapsed;
+            textBoxLoginTeacher.Visibility = Visibility.Collapsed;
+            passwordBoxTeacher.Visibility = Visibility.Collapsed;
+            passwordBoxAdmin.Visibility = Visibility.Collapsed;
             labelLoginAmd.Visibility = Visibility.Collapsed;
-            textBoxLoginAmd.Visibility = Visibility.Collapsed;
+            textBoxLoginAdmin.Visibility = Visibility.Collapsed;
 
             defaultColor_buttonStudent = buttonStudent.Background;
             defaultColor_buttonTeacher = buttonTeacher.Background;
             defaultColor_buttonAdmin = buttonAdmin.Background;
+
+            LoginsForDebugging();
 
             try
             {
@@ -79,7 +84,6 @@ namespace WinLogin
             {
                 MessageBox.Show(e.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private void buttonStudent_Click(object sender, RoutedEventArgs e)
@@ -92,12 +96,12 @@ namespace WinLogin
             labelPasswordAdm.Visibility = Visibility.Collapsed;
             textBoxFIO.Visibility = Visibility.Visible;
             comboBoxGroup.Visibility = Visibility.Visible;
-            textBoxLogin.Visibility = Visibility.Collapsed;
-            passwordBoxTech.Visibility = Visibility.Collapsed;
-            passwordBoxAdm.Visibility = Visibility.Collapsed;
+            textBoxLoginTeacher.Visibility = Visibility.Collapsed;
+            passwordBoxTeacher.Visibility = Visibility.Collapsed;
+            passwordBoxAdmin.Visibility = Visibility.Collapsed;
             buttonLogin.Visibility = Visibility.Visible;
             labelLoginAmd.Visibility = Visibility.Collapsed;
-            textBoxLoginAmd.Visibility = Visibility.Collapsed;
+            textBoxLoginAdmin.Visibility = Visibility.Collapsed;
 
             buttonStudent.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90);
             buttonTeacher.Background = defaultColor_buttonTeacher;            
@@ -107,7 +111,7 @@ namespace WinLogin
             buttonTeacher.Opacity = 0.5;
             buttonAdmin.Opacity = 0.5;
 
-            ClearFields();
+            //ClearFields();
             selUser = selectionOfUser.Student;
         }
 
@@ -120,12 +124,12 @@ namespace WinLogin
             labelPasswordAdm.Visibility = Visibility.Collapsed;
             textBoxFIO.Visibility = Visibility.Collapsed;
             comboBoxGroup.Visibility = Visibility.Collapsed;
-            textBoxLogin.Visibility = Visibility.Visible;
-            passwordBoxTech.Visibility = Visibility.Visible;
-            passwordBoxAdm.Visibility = Visibility.Collapsed;
+            textBoxLoginTeacher.Visibility = Visibility.Visible;
+            passwordBoxTeacher.Visibility = Visibility.Visible;
+            passwordBoxAdmin.Visibility = Visibility.Collapsed;
             buttonLogin.Visibility = Visibility.Visible;
             labelLoginAmd.Visibility = Visibility.Collapsed;
-            textBoxLoginAmd.Visibility = Visibility.Collapsed;
+            textBoxLoginAdmin.Visibility = Visibility.Collapsed;
 
             buttonStudent.Background = defaultColor_buttonStudent;
             buttonTeacher.Background = new LinearGradientBrush(Colors.Gold, Colors.Azure, 90); 
@@ -135,7 +139,7 @@ namespace WinLogin
             buttonTeacher.Opacity = 1.0;
             buttonAdmin.Opacity = 0.5;
 
-            ClearFields();
+            //ClearFields();
             selUser = selectionOfUser.Teacher;
 
         }
@@ -149,12 +153,12 @@ namespace WinLogin
             labelPasswordAdm.Visibility = Visibility.Visible;
             textBoxFIO.Visibility = Visibility.Collapsed;
             comboBoxGroup.Visibility = Visibility.Collapsed;
-            textBoxLogin.Visibility = Visibility.Collapsed;
-            passwordBoxTech.Visibility = Visibility.Collapsed;
-            passwordBoxAdm.Visibility = Visibility.Visible;
+            textBoxLoginTeacher.Visibility = Visibility.Collapsed;
+            passwordBoxTeacher.Visibility = Visibility.Collapsed;
+            passwordBoxAdmin.Visibility = Visibility.Visible;
             buttonLogin.Visibility = Visibility.Visible;
             labelLoginAmd.Visibility = Visibility.Visible;
-            textBoxLoginAmd.Visibility = Visibility.Visible;
+            textBoxLoginAdmin.Visibility = Visibility.Visible;
 
             buttonStudent.Background = defaultColor_buttonStudent;
             buttonTeacher.Background = defaultColor_buttonTeacher;
@@ -164,24 +168,20 @@ namespace WinLogin
             buttonTeacher.Opacity = 0.5;
             buttonAdmin.Opacity = 1.0;
 
-            ClearFields();
+            //ClearFields();
             selUser = selectionOfUser.Admin;
 
         }
 
         private void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка на введения значений в поля 
 
-
+            // Проверка на введеные значений в поля каждой из ролей
                 switch (selUser)
                 {
                     case selectionOfUser.Student:
-
                         if (textBoxFIO.Text == "" || comboBoxGroup.SelectedIndex == -1)
-                        {
                             MessageBox.Show("Вы не заполнили и (или) не выбрали все поля", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
                         else
                         {
                             WinStudent NewWinStudent = new WinStudent();
@@ -192,36 +192,75 @@ namespace WinLogin
                         break;
 
                     case selectionOfUser.Teacher:
+                        // Выборка из базы списка логинов и паролей преподавателей
+                        //
+                        using (ExamTicket_dbEntities db7 = new ExamTicket_dbEntities())
+                        {
+                            bool loginOk = false;
 
+                            var loginPassword = from a in db7.Teachers
+                                                where a.login_tch == textBoxLoginTeacher.Text
+                                                where a.password_tch == passwordBoxTeacher.Password
+                                                select a;
+                            
+                            foreach (var s in loginPassword)
+                            {
+                                if ((String.Compare(s.login_tch, textBoxLoginTeacher.Text) == 0) && (String.Compare(s.password_tch, passwordBoxTeacher.Password) == 0))
+                                {
+                                    WinTeacher NewWinTeacher = new WinTeacher();
 
+                                    // Эта логин преподавателя, который будет предаватся в окно "Преподаватель" для его идентификации
+                                    NewWinTeacher.TeacherLogin = textBoxLoginTeacher.Text;
 
-                        WinTeacher NewWinTeacher = new WinTeacher();
-                        NewWinTeacher.ShowDialog();
-
+                                    NewWinTeacher.ShowDialog();
+                                    loginOk = true;
+                                }
+                                else
+                                    loginOk = false;
+                            }
+                            if(loginOk == false)
+                                MessageBox.Show("Не верный логин или пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                         break;
 
                     case selectionOfUser.Admin:
-
-
-                        WinAdmin NewWinAdmin = new WinAdmin();
-                        NewWinAdmin.ShowDialog();
-
-
-
+                        if (textBoxLoginAdmin.Text == "admin" && passwordBoxAdmin.Password == "admin")
+                        {
+                            WinAdmin NewWinAdmin = new WinAdmin();
+                            NewWinAdmin.ShowDialog();
+                        }
+                        else
+                            MessageBox.Show("Не верный логин или пароль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
+
                     default:
                         MessageBox.Show("Вы не выбрали роль!", "Ошибка!");
                         break;
                 }                                              
         }
 
+        // Очищает логины и пароли при начатии кнопки других ролей
         private void ClearFields()  
         {
             textBoxFIO.Text = "";
-            textBoxLogin.Text = "";
-            passwordBoxTech.Password = "";
-            passwordBoxAdm.Password = "";
-            textBoxLoginAmd.Text = "";
+            textBoxLoginTeacher.Text = "";
+            passwordBoxTeacher.Password = "";
+            passwordBoxAdmin.Password = "";
+            textBoxLoginAdmin.Text = "";
+        }
+
+        // Только для тестирования: 
+        // логины и пароли созданные для тестирования и отладки
+        private void LoginsForDebugging()
+        {
+            textBoxFIO.Text = "Test_Student";
+            comboBoxGroup.SelectedIndex = 0;
+            textBoxLoginTeacher.Text = "ivanov";
+            passwordBoxTeacher.Password = "123";
+            //textBoxLoginTeacher.Text = "petrov";
+            //passwordBoxTeacher.Password = "345";
+            textBoxLoginAdmin.Text = "admin";
+            passwordBoxAdmin.Password = "admin";
         }
     }
 }

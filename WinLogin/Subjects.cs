@@ -24,6 +24,7 @@ namespace WinLogin
     
         public int id_subject { get; set; }
         public string name_subject { get; set; }
+        public Nullable<int> quantity_questions_of_tiket { get; set; }
     
         public virtual ICollection<Categories> Categories { get; set; }
         public virtual ICollection<LogStudents> LogStudents { get; set; }

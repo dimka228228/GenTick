@@ -19,13 +19,13 @@
         </TextBlock>
 
         <TabControl Grid.Column="0" FontWeight="Bold" VerticalAlignment="Top" VerticalContentAlignment="Top" Height="407" Margin="10,10,10,0" Grid.Row="1" Background="#FFD0DBE6" Grid.ColumnSpan="2">
-            <TabItem Header="Преподавалели" Background="#FF99B4D1">
+            <TabItem Header="Преподаватели" Background="#FF99B4D1" Margin="10,-2,-14,-1" FontWeight="Normal" >
                 <Grid Margin="10,6,-10,-6" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="37*"></RowDefinition>
                         <RowDefinition Height="8*"></RowDefinition>
-                        <RowDefinition Height="181*"></RowDefinition>
-                        <RowDefinition Height="137*"></RowDefinition>
+                        <RowDefinition Height="236*"></RowDefinition>
+                        <RowDefinition Height="82*"></RowDefinition>
                         <RowDefinition Height="12*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -33,14 +33,14 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" MinWidth="540" Background="#FFD0DBE6" Margin="0,0,8,0">
-                        <Button x:Name="Add_Teacher" Content="Добавить" Click="Add_Teacher_Click" Background="#FF9AE6BC" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0"/>
-                        <Button x:Name="Save_Teacher" Content="Сохранить" Click="Save_Teacher_Click" Background="#FFF3E979" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0"/>
-                        <Button x:Name="Del_Teacher" Content="Удалить" Click="Del_Teacher_Click" Background="#FFEE7373" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0"/>
-                        <Label Content="Поиск" Margin="23,0,0,0" VerticalAlignment="Center"/>
-                        <TextBox x:Name="Search_cat" HorizontalAlignment="Left" Height="25" Margin="0,6" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Width="240" />
+                        <Button x:Name="Add_Teacher" Content="Добавить" Click="Add_Teacher_Click" Background="#FF9AE6BC" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0" FontWeight="Normal"/>
+                        <Button x:Name="Save_Teacher" Content="Сохранить" Click="Save_Teacher_Click" Background="#FFF3E979" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0" FontWeight="Normal"/>
+                        <Button x:Name="Del_Teacher" Content="Удалить" Click="Del_Teacher_Click" Background="#FFEE7373" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0" FontWeight="Normal"/>
+                        <Label Content="Поиск" Margin="23,0,0,0" VerticalAlignment="Center" FontWeight="Normal"/>
+                        <TextBox x:Name="Search_cat" HorizontalAlignment="Left" Height="25" Margin="0,6" BorderBrush="DarkCyan" TextWrapping="Wrap" VerticalAlignment="Center" TextChanged="TextBox_TextChanged" Width="234" />
                     </StackPanel>
 
-                    <DataGrid x:Name="dataGrid_teachers" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,0,19,1" Background="#FFE2E9F0" >
+                    <DataGrid x:Name="dataGrid_teachers" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,0,19,1" Background="#FFE2E9F0" RowBackground="LightGray" AlternatingRowBackground="White" Padding="0,0" FontWeight="Normal" HorizontalAlignment="Left" >
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="id_teacher_dg" Header="Id" Binding="{Binding id_teacher}" Width="40"/>
                             <DataGridTextColumn x:Name="name_tch_dg" Header="ФИО преподавателя" Binding="{Binding name_tch}" Width="200"/>
@@ -49,118 +49,107 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="3" Margin="20,8,19,4" DataContext="{Binding ElementName=dataGrid_teachers, Path=SelectedItem}">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Id" MinWidth="55"/>
-                            <TextBox Name="textBox_id_teacher" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_teacher, UpdateSourceTrigger=PropertyChanged}" MinWidth="200" Background="#FFE2E9F0"/>
+                    <StackPanel Grid.Row="3" Margin="0,10,15,0" DataContext="{Binding ElementName=dataGrid_teachers, Path=SelectedItem}">
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Label Content="Id" MinWidth="55" FontWeight="Normal"/>
+                            <TextBox Name="textBox_id_teacher" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_teacher, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Width="140" FontWeight="Normal"/>
+                            <Label Content="ФИО" MinWidth="55" FontWeight="Normal" Margin="20,0,0,0"/>
+                            <TextBox BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding name_tch, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" MinWidth="200" Background="#FFE2E9F0" Width="272" FontWeight="Normal"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="ФИО" MinWidth="55"/>
-                            <TextBox BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding name_tch, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" MinWidth="200" Background="#FFE2E9F0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Логин" MinWidth="55"/>
-                            <TextBox BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding login_tch, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" MinWidth="200" Background="#FFE2E9F0"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Пароль" MinWidth="55"/>
-                            <TextBox BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding password_tch, UpdateSourceTrigger=PropertyChanged}" MinWidth="200" Background="#FFE2E9F0"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Label Content="Логин" MinWidth="55" FontWeight="Normal"/>
+                            <TextBox BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding login_tch, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Width="140" Background="#FFE2E9F0" FontWeight="Normal"/>
+                            <Label Content="Пароль" MinWidth="55" FontWeight="Normal" Margin="20,0,0,0"/>
+                            <TextBox BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding password_tch, UpdateSourceTrigger=PropertyChanged}" MinWidth="200" Background="#FFE2E9F0" Width="272" FontWeight="Normal"/>
                         </StackPanel>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="3" Margin="0,0,19,13" DataContext="{Binding ElementName=dataGrid_teachers, Path=SelectedItem}">
+                    <StackPanel Grid.Row="3" Margin="0,0,19,10" DataContext="{Binding ElementName=dataGrid_teachers, Path=SelectedItem}">
                         <StackPanel Orientation="Horizontal"/>
                     </StackPanel>
 
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Предметы" Background="#FFB5C7D8">
+            <TabItem Header="Предметы" Background="#FFB5C7D8" Margin="14,-2,-18,-1" FontWeight="Normal" >
                 <Grid Margin="10,6,0,0" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="33*"></RowDefinition>
-                        <RowDefinition Height="44*"></RowDefinition>
-                        <RowDefinition Height="174*"/>
-                        <RowDefinition Height="21*"/>
-                        <RowDefinition Height="84*"/>
+                        <RowDefinition Height="0*"></RowDefinition>
+                        <RowDefinition Height="43*"></RowDefinition>
+                        <RowDefinition Height="272*"/>
+                        <RowDefinition Height="54*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="113*"></ColumnDefinition>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Label Grid.Row="0" Margin="10,0">Список предметов</Label>
 
-                    <DataGrid Name="dataGrid_Subjects" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="10,1,10,0" >
+                    <DataGrid Name="dataGrid_Subjects" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="10,1,10,0" RowBackground="LightGray" AlternatingRowBackground="White" Padding="0,0" Grid.ColumnSpan="2" FontWeight="Normal">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="id_subject_dg" Header="Id" Binding="{Binding id_subject}" Width="50"/>
-                            <DataGridTextColumn x:Name="name_subject_dg" Header="Название предмета" Binding="{Binding name_subject}" Width="450"/>
+                            <DataGridTextColumn x:Name="name_subject_dg" Header="Название предмета" Binding="{Binding name_subject}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" MinWidth="340" Background="#FFD0DBE6" Margin="10,0,10,2">
-                        <Button x:Name="Add_Subject" Content="Добавить" Click="Add_Subject_Click" Background="#FF9AE6BC" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0"/>
-                        <Button x:Name="Save_Subject" Content="Сохранить" Click="Save_Subject_Click" Background="#FFF3E979" MinWidth="70" Width="53" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,0,10,0"/>
-                        <Button x:Name="Del_Subject" Content="Удалить" Click="Del_Subject_Click" Background="#FFEE7373" MinWidth="70" Width="53" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,0,10,0"/>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" MinWidth="340" Background="#FFD0DBE6" Margin="10,0,10,2" Grid.ColumnSpan="2">
+                        <Button x:Name="Add_Subject" Content="Добавить" Click="Add_Subject_Click" Background="#FF9AE6BC" MinWidth="70" Width="53" VerticalAlignment="Center" Height="24" Margin="0,0,10,0" FontWeight="Normal"/>
+                        <Button x:Name="Save_Subject" Content="Сохранить" Click="Save_Subject_Click" Background="#FFF3E979" MinWidth="70" Width="53" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,0,10,0" FontWeight="Normal"/>
+                        <Button x:Name="Del_Subject" Content="Удалить" Click="Del_Subject_Click" Background="#FFEE7373" MinWidth="70" Width="53" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="24" Margin="0,0,10,0" FontWeight="Normal"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="4" Margin="10,2,0,10" DataContext="{Binding ElementName=dataGrid_Subjects, Path=SelectedItem}">
-
-                        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="0,0,10,0">
-                            <Label Content="Id" Width="73" VerticalAlignment="Center" />
-                            <TextBox Name="textBox_id_subject" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_subject, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="28" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,0,5" Width="457"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="0,0,10,0">
-                            <Label Content="Предмет" Width="73" VerticalAlignment="Center"/>
-                            <TextBox Name="textBox_subject" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding name_subject, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="28" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,5,0,0" Width="457"/>
-                        </StackPanel>
+                    <StackPanel Grid.Row="3" Margin="10,14" Orientation="Horizontal" DataContext="{Binding ElementName=dataGrid_Subjects, Path=SelectedItem}" Grid.ColumnSpan="2" VerticalAlignment="Center" Height="26">
+                        <Label Content="Id" Width="30" VerticalAlignment="Center" FontWeight="Normal" />
+                        <TextBox Name="textBox_id_subject" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_subject, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="60" FontWeight="Normal"/>
+                        <Label Content="Предмет" Width="73" VerticalAlignment="Center" FontWeight="Normal" Margin="20,0,0,0"/>
+                        <TextBox Name="textBox_subject" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding name_subject, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0" Width="347" FontWeight="Normal"/>
                     </StackPanel>
 
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Связь предодаватель => предмет" Background="#FFB5C7D8">
+            <TabItem Header="Связь: преподаватель => предмет" Background="#FFB5C7D8" Margin="17,-2,-21,-1" FontWeight="Normal" >
                 <Grid Margin="10,6,0,0" >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="59*"></RowDefinition>
-                        <RowDefinition Height="9*"></RowDefinition>
-                        <RowDefinition Height="55*"/>
+                        <RowDefinition Height="128*"></RowDefinition>
+                        <RowDefinition Height="44*"></RowDefinition>
+                        <RowDefinition Height="26*"></RowDefinition>
+                        <RowDefinition Height="171*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="113*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="dataGrid_teachers_subjects" Grid.Row="0" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,10,10,1" Background="#FFE2E9F0" MouseUp="DataGrid_teachers_subjects_MouseUp" >
+                    <DataGrid x:Name="dataGrid_teachers_subjects" Grid.Row="0" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,10,10,1" Background="#FFE2E9F0" MouseUp="DataGrid_teachers_subjects_MouseUp" RowBackground="LightGray" AlternatingRowBackground="White" Padding="0,0" HorizontalScrollBarVisibility="Disabled" FontWeight="Normal">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="id_teacher_ts" Header="Id" Binding="{Binding id_teacher}" Width="40"/>
-                            <DataGridTextColumn x:Name="name_tch_ts" Header="ФИО преподавателя" Binding="{Binding name_tch}" Width="450"/>
+                            <DataGridTextColumn x:Name="name_tch_ts" Header="ФИО преподавателя" Binding="{Binding name_tch}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="1" Margin="0,0,10,0" Orientation="Horizontal">
-                        <Label Margin="20,0,0,0">Предметы преподавалеля</Label>
-                        <Label Margin="208,0,0,0">Все предметы</Label>
+                    <StackPanel Grid.Row="1" Margin="0,0,10,0" Orientation="Horizontal" DataContext="{Binding ElementName=dataGrid_teachers_subjects, Path=SelectedItem}">
+                        <Label Content="Id" Width="30" VerticalAlignment="Center" FontWeight="Normal" />
+                        <TextBox Name="dataGrid_teachers_subjects_Id" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding id_teacher, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,0,5" Width="100" FontWeight="Normal"/>
+                        <Label Content="ФИО " Width="40" VerticalAlignment="Center" Margin="20,0,0,0" FontWeight="Normal" />
+                        <TextBox Name="dataGrid_teachers_subjects_FIO" BorderThickness="1" BorderBrush="DarkCyan"  Text="{Binding name_tch, UpdateSourceTrigger=PropertyChanged}" Background="#FFE2E9F0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,6,0,9" Width="350" FontWeight="Normal"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Row="2" Margin="0,2,10,10" Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                            <ListBox x:Name="listBox_subject_of_teacher" HorizontalAlignment="Left" Height="153" Margin="0,0,0,0" VerticalAlignment="Top" Width="210"/>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" Margin="0,0,10,0" Height="153" Width="112">
-                            <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                                <Button Name="buttonAddSubject" Content="Добавить" Height="27" Margin="0,28,0,20"/>
-                                <Button Name="buttonDeleteSubject" Content="Удалить" Height="27" Margin="0,20,0,0" />
-                            </StackPanel>
-                        </StackPanel>
-
-                        <StackPanel Orientation="Vertical" Margin="0,0,10,0" Width="208" >
-                            <ListBox Name="listBox_all_subjects" Height="153" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="189"/>
-                        </StackPanel>
+                    <StackPanel Grid.Row="2" Margin="0,0,0,0" Orientation="Horizontal">
+                        <Label Margin="30,0,0,0" Content="Предметы преподавателя" FontWeight="Normal"/>
+                        <Label Margin="215,0,0,0" Content="Все предметы" FontWeight="Normal"/>
                     </StackPanel>
 
+                    <StackPanel Grid.Row="3" Margin="0" Orientation="Horizontal">
+                        <ListBox x:Name="listBox_subject_of_teacher" HorizontalAlignment="Left" Height="160" Margin="0,0,0,0" Width="205" FontWeight="Normal"/>
 
+                        <StackPanel Orientation="Vertical" Margin="20,0" Width="90" Height="160">
+                            <Button Name="buttonAddSubject" Content="Добавить" Height="27" Margin="0,20,0,0" Background="#FF9AE6BC" Click="Add_ToSubjectOfTeacher" FontWeight="Normal"/>
+                            <Button Name="buttonDeleteSubject" Content="Удалить" Height="27" Margin="0,20,0,0" Background="#FFEE7373" Click="Delete_ToSubjectOfTeacher" FontWeight="Normal" />
+                            <Button Name="buttonSaveSubject" Content="Сохранить" Height="27" Margin="0,20,0,0" Background="#FFF3E979" Click="Save_ToSubjectOfTeacher" FontWeight="Normal" />
+                        </StackPanel>
 
+                        <ListBox Name="listBox_all_subjects" Height="160" Margin="0" SelectionChanged="listBox_all_subjects_SelectionChanged" FontWeight="Normal" Width="205"/>
+                    </StackPanel>
                 </Grid>
 
             </TabItem>

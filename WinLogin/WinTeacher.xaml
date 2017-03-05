@@ -1,55 +1,166 @@
-﻿<Window x:Class="WinLogin.WinTeacher"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Генератор билетов" Height="450" Width="525" WindowStartupLocation="CenterScreen" Icon="bookcase.png" ResizeMode="NoResize">
-    <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Margin="0,0,-6,0">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="WinLogin.WinTeacher"
+        Title="Генератор билетов" Height="600" Width="600" WindowStartupLocation="CenterScreen" Icon="bookcase.png" ResizeMode="NoResize" Loaded="Window_Loaded_Form_Teacher">
+    <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="60*" ></RowDefinition>
-            <RowDefinition Height="40*" ></RowDefinition>
-            <RowDefinition Height="40*" ></RowDefinition>
-            <RowDefinition Height="40*" ></RowDefinition>
-            <RowDefinition Height="40*" ></RowDefinition>
-            <RowDefinition Height="40*" ></RowDefinition>
-            <RowDefinition Height="160*" ></RowDefinition>
-            <RowDefinition Height="40*" ></RowDefinition>
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="524" />
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"></ColumnDefinition>
-            <ColumnDefinition Width="48*"/>
-            <ColumnDefinition Width="119*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFF3F5F7" FontSize="16" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Padding="35,10,0,10" Height="40" Grid.ColumnSpan="3" >
-               Преподаватель
-        </TextBlock>
+        <TextBlock Grid.Column="0" Grid.Row="0"  VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Foreground="#FFF3F5F7" FontSize="16" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" FontWeight="Bold" Padding="35,10,0,10" Height="40" Grid.ColumnSpan="2" ><Run Text="Преподаватель"/></TextBlock>
 
-        <Label Name="labelFIO" Content="ФИО:" Grid.Column="1" Grid.Row="1" Margin="0,8,1,0" Height="30" VerticalAlignment="Top" Grid.RowSpan="2"/>
-        <TextBox Name="textBoxFIO"  Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,9,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
-        <TextBox Name="textBoxLogin" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,9,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="311"/>
-        <Label Name="labelLogin" Content="Логин:" Grid.Column="1" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
-        <Button Name="buttonLogin" Content="Ок" Grid.Column="2" HorizontalAlignment="Left" Margin="277,7,0,0" Grid.Row="5" VerticalAlignment="Top" Width="44" Height="22" />
-        <Label x:Name="labelLogin_Copy" Content="Предметы" Grid.Column="1" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="3" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
-        <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="311" Height="22"/>
-        <Label x:Name="labelLogin_Copy1" Content="Категория" Grid.Column="1" HorizontalAlignment="Left" Margin="0,5,0,0" Grid.Row="4" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
-        <ComboBox Grid.Column="2" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="4" VerticalAlignment="Top" Width="311" Height="22"/>
-        <Label x:Name="labelLogin_Copy2" Content="Поиск" Grid.Column="1" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="5" VerticalAlignment="Top" Height="26" Width="146" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="textBoxLogin_Copy" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="10,7,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="256"/>
-        <Button x:Name="buttonLogin_Copy" Content="Добавить вопрос" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" Margin="0,10,0,0"/>
-        <Button x:Name="buttonLogin_Copy1" Content="Редактировать вопрос" Grid.Column="1" HorizontalAlignment="Left" Margin="0,60,0,0" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" />
-        <Button x:Name="buttonLogin_Copy2" Content="Удалить вопрос" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" Width="136" Height="30" Margin="0,107,0,0"/>
-        <Button x:Name="buttonExit" Content="Закрыть" Grid.Column="2" HorizontalAlignment="Left" Margin="249,5,0,0" Grid.Row="7" VerticalAlignment="Top" Width="72" Height="22" Click="buttonExit_Click"/>
-        <DataGrid Name="dataGridTeacher" Grid.Row="6" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Grid.Column="2" Margin="0,1,20,10">
-            <DataGrid.Effect>
-                <DropShadowEffect/>
-            </DataGrid.Effect>
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Header="Id" Binding="{Binding id_teacher}" Width="30"/>
-                <DataGridTextColumn x:Name="categoryColumn" Header="Имя" Binding="{Binding name_tch}" Width="*"/>
-                <DataGridTextColumn x:Name="loginColumn" Header="Логин" Binding="{Binding login_tch}" Width="30"/>
-                <DataGridTextColumn x:Name="passwordColumn" Header="Пароль" Binding="{Binding password_tch}" Width="*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <TabControl Grid.Column="1" FontWeight="Bold" VerticalAlignment="Top" VerticalContentAlignment="Top" Height="509" Margin="10,5,10,0" Grid.Row="1" Background="#FFD0DBE6" >
+            <TabItem Header="Предметы" Background="#FF99B4D1" Margin="10,-2,-14,-1" FontWeight="Normal" >
+
+                <Grid Margin="10" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="344*"/>
+                        <RowDefinition Height="77*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="113*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,0">
+                        <Label x:Name="labelFIO" Content="ФИО:"  Margin="0,0,20,0" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left" Width="39" />
+                        <Label x:Name="textBoxFIO" HorizontalAlignment="Left" Height="26" BorderBrush="DarkCyan" VerticalAlignment="Center" Width="475" Margin="0,4,0,5" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="dataGrid_Subjects_form_teacher" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,10,0,0" RowBackground="LightGray" AlternatingRowBackground="White" Padding="5,0" MinHeight="80" MouseUp="dataGrid_Subjects_form_teacher_MouseUp">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="id_subject_dg1" Header="Id" Binding="{Binding Id}" Width="50"/>
+                            <DataGridTextColumn x:Name="name_subject_dg1" Header="Название предмета" Binding="{Binding Name}" Width="280"/>
+                            <DataGridTextColumn x:Name="_dg1" Header="Количество вопросов в билете" Binding="{Binding Quantity}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Orientation="Vertical" DataContext="{Binding SelectedItem, ElementName=dataGrid_Subjects_form_teacher}" VerticalAlignment="Top" Margin="0,10,0,0" Height="62">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0" VerticalAlignment="Top">
+                            <Label Content="Id" Width="20" VerticalAlignment="Center" FontWeight="Normal" />
+                            <Label x:Name="textBox_id_subject" BorderThickness="1"  Content="{Binding Id, UpdateSourceTrigger=PropertyChanged}" Height="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Width="41" FontWeight="Bold" />
+                            <Label Content="Предмет" Width="60" VerticalAlignment="Center" FontWeight="Normal" Margin="10,0,0,0"/>
+                            <Label x:Name="textBox_subject" BorderThickness="1" Content="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0" Width="350" FontWeight="Bold" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <Label Content="Изменить количество вопросов в билете на" Width="264" VerticalAlignment="Center" Margin="0,4,20,4" />
+                            <ComboBox x:Name="comboBoxQuantityQuestions" HorizontalAlignment="Center" Margin="10,0,20,0"  VerticalAlignment="Center" Width="55" Height="26" />
+                            <Button x:Name="button_Save_New_Value_qq_of_tiket" Content="Сохранить"  Width="97" Height="26" Margin="30,0,0,0" Click="button_Save_New_Value_qq_of_tiket_Click"/>
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Категории" Background="#FF99B4D1" Margin="10,-2,-14,-1" FontWeight="Normal" >
+                <Grid Margin="10,0,0,0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="52*"/>
+                        <RowDefinition Height="329*"/>
+                        <RowDefinition Height="48"/>
+                        <RowDefinition Height="48*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="113*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,5,10,5" >
+                        <Label Content="Предмет" Width="80" VerticalAlignment="Center" Margin="0,4,20,4" />
+                        <ComboBox x:Name="comboBox_name_of_subject_catogory" HorizontalAlignment="Center" Margin="10,7,20,7"  VerticalAlignment="Center" Width="326" Height="26" SelectionChanged="comboBox_name_of_subject_catogory_SelectionChanged" />
+                    </StackPanel>
+
+                    <DataGrid x:Name="dataGridCatogory" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True"  Margin="0,5,10,10" MouseUp="dataGridCatogory_MouseUp" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="idCategory_dg" Header="Id" Binding="{Binding id_cat_for_dg}" Width="30"/>
+                            <DataGridTextColumn x:Name="nameCategory_dg" Header="Название" Binding="{Binding name_cat_for_dg}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" DataContext="{Binding ElementName=dataGridCatogory, Path=SelectedItem}" Margin="0,0,10,3" >
+                        <Label Content="Название категории" Width="127" VerticalAlignment="Center" Margin="0,0,0,0" />
+                        <!--<TextBox x:Name="textBox_name_catogory" Text="{Binding name_cat_for_dg, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="20,2,0,2" TextWrapping="Wrap" VerticalAlignment="Center" Width="371"/>-->
+                        <TextBox x:Name="textBox_name_catogory" HorizontalAlignment="Left" Height="28" Margin="20,3,0,3" TextWrapping="Wrap" Width="384" BorderBrush="DarkCyan" Background="#FFE2E9F0" FontWeight="Bold"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" Margin="0,7,10,15" VerticalAlignment="Center" Orientation="Horizontal" Height="26">
+                        <Button x:Name="button_tabTeacher_Add_Category" Content="Добавить" VerticalAlignment="Center" Width="90" Height="25" Margin="65,0,0,0" Background="#FF9AE6BC" Click="tabTeacher_Add_Category_Click" />
+                        <Button x:Name="button_tabTeacher_Save_Category" Content="Сохранить" Margin="65,0,0,0" VerticalAlignment="Center" Width="90" Height="25" Background="#FFF3E979" Click="tabTeacher_Save_Category_Click" />
+                        <Button x:Name="button_tabTeacher_Delete_Category" Content="Удалить" VerticalAlignment="Center" Width="90" Height="25" Margin="65,0,0,0" Background="#FFEE7373" Click="tabTeacher_Delete_Category_Click"/>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Вопросы" Background="#FF99B4D1" Margin="10,-2,-14,-1" FontWeight="Normal" >
+                <Grid Margin="10,6,-10,-6" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="39"/>
+                        <RowDefinition Height="7*"/>
+                        <RowDefinition Height="35*"/>
+                        <RowDefinition Height="7*"/>
+                        <RowDefinition Height="24*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="113*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,10,0" >
+                        <Label Content="Предмет" Width="65" VerticalAlignment="Center" Margin="0,6,0,7" />
+                        <ComboBox x:Name="comboBox_name_of_subject_questions" HorizontalAlignment="Center" Margin="0,6,0,7"  VerticalAlignment="Center" Width="148" Height="26" SelectionChanged="comboBox_name_of_subject_questions_SelectionChanged" />
+                        <Label Content="Категории" Width="69" VerticalAlignment="Center" Margin="10,6,0,7" />
+                        <ComboBox x:Name="comboBox_name_of_category" HorizontalAlignment="Center" Margin="5,6,0,7"  VerticalAlignment="Center" Width="246" Height="26" />
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,20,0">
+                        <Label x:Name="labelLogin_Copy2" Content="Поиск" HorizontalAlignment="Center" Height="26" Width="57" Margin="0"/>
+                        <TextBox x:Name="textBoxLogin_Copy" HorizontalAlignment="Center" Height="26" Margin="9,0,0,0" TextWrapping="Wrap" Width="328"/>
+                        <Button x:Name="buttonLogin" Content="Ок" HorizontalAlignment="Left" Margin="45,0,0,0" Width="60" Height="26" VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <DataGrid x:Name="dataGridTeacher_list_questions" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,5,20,15">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="idColumn1" Header="Id" Binding="{Binding id_teacher}" Width="30"/>
+                            <DataGridTextColumn x:Name="categoryColumn1" Header="Имя" Binding="{Binding name_tch}" Width="*"/>
+                            <DataGridTextColumn x:Name="loginColumn1" Header="Логин" Binding="{Binding login_tch}" Width="30"/>
+                            <DataGridTextColumn x:Name="passwordColumn1" Header="Пароль" Binding="{Binding password_tch}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,1">
+                        <Button x:Name="buttonAddQuestion" Content="Добавить" Background="#FF9AE6BC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Height="25" Margin="0,0,0,0"/>
+                        <Button x:Name="buttonEditQuestion" Content="Редактировать" Background="#FFF3E979" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="97" Height="25" />
+                        <Button x:Name="buttonDeleteQuestion" Content="Удалить" Background="#FFEE7373" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Height="25" Margin="0,0,0,0"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,10,0">
+                        <Label x:Name="labelLogin_Copy4" Content="Рисунок" Grid.Row="4" Height="26" Width="76" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Border Grid.Row="5" x:Name="brdSiteLogo" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="91,10,0,0" Height="93"  Width="377">
+                            <Image  HorizontalAlignment="Left" Margin="0,0,-2,-25" Grid.Row="7" Width="377" />
+                        </Border>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+
+
+
+
+
+
+
+
 
     </Grid>
+
 </Window>

@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "g:\_Sergey\learning\Программирование\19_CP_.Net Framework\Gorchinsky_KP_.NetFramework\ver_07\GenTick_04\GenTick\WinLogin\User.edmx" включено. 
+﻿// Создание кода T4 для модели "g:\_Sergey\learning\Программирование\19_CP_.Net Framework\Gorchinsky_KP_.NetFramework\ver_09\GenTick_04\GenTick\WinLogin\User.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

@@ -30,8 +30,9 @@ namespace WinLogin
         ExamTicket_dbEntities db;
 
         Teachers tch = new Teachers();
+        Subjects subj = new Subjects();
 
-        SubjectOfTeacher sot = new SubjectOfTeacher();
+        
         public WinAdmin()
         {
             InitializeComponent();
@@ -50,11 +51,9 @@ namespace WinLogin
         {
             db.Teachers.Load();
             dataGrid_teachers.ItemsSource = db.Teachers.Local.ToBindingList();
-            dataGrid_Subjects.ItemsSource = db.Teachers.Local.ToBindingList();
-            dataGrid_teachers_subjects.ItemsSource = db.Teachers.Local.ToBindingList();
-            
 
-            
+            // Загрузка dataGrid_teachers_subjects данными из базы
+            dataGrid_teachers_subjects.ItemsSource = db.Teachers.Local.ToBindingList();                              
         }
         private void Save_tch()
         {
@@ -98,9 +97,10 @@ namespace WinLogin
             //Поиск
             if (Search_cat.Text != "")
             {
-                dataGrid_teachers.ItemsSource = db.Teachers.Where(t => t.name_tch.Contains(Search_cat.Text)).ToList();
-                //dataGrid_teachers.ItemsSource = db.Teachers.Where(t => t.login_tch.Contains(Search_cat.Text)).ToList();
-                //dataGrid_teachers.ItemsSource = db.Teachers.Where(t => t.password_tch.Contains(Search_cat.Text)).ToList();
+                dataGrid_teachers.ItemsSource = db.Teachers
+                    .Where(t => t.name_tch.Contains(Search_cat.Text))
+                    //.Where(t => t.login_tch.Contains(Search_cat.Text))
+                    .ToList();
             }                
             else
                 dataGrid_teachers.ItemsSource = db.Teachers.Local.ToBindingList();
@@ -112,7 +112,18 @@ namespace WinLogin
         private void Load_sub()
         {
             db.Subjects.Load();
+            //dataGrid_Subjects.ItemsSource = db.Teachers.Local.ToBindingList();
             dataGrid_Subjects.ItemsSource = db.Subjects.Local.ToBindingList();
+
+            // Очистка listBox_all_subjects и загрузка данными из базы
+            listBox_all_subjects.Items.Clear();
+            using (ExamTicket_dbEntities db2 = new ExamTicket_dbEntities())
+            {
+                var listOfAllSubjects = from p in db2.Subjects
+                                        select p;
+                foreach (var s in listOfAllSubjects)
+                    listBox_all_subjects.Items.Add(s.name_subject);
+            }
         }
         private void Save_sub()
         {
@@ -145,7 +156,7 @@ namespace WinLogin
         }
 
         // Метод, который при нажатии мышки на dataGrid_teachers_subjects выводит
-        // премтеты, которые закреплены за выведеным преподавателнм
+        // предметы, которые закреплены за выведеным преподавателнм
         private void DataGrid_teachers_subjects_MouseUp(object sender, MouseButtonEventArgs e)
         {
             int selectedColumn = dataGrid_teachers_subjects.CurrentCell.Column.DisplayIndex;
@@ -176,29 +187,6 @@ namespace WinLogin
                 QuarySubject(Convert.ToInt32(id_sub));
             }
 
-            // Загрузка данными listBox_subject_of_teacher из БД
-
- 
-            
-/*            {
-                var query = (from p1 in db1.Teachers
-                             join p2 in db1.SubjectOfTeacher
-
-                            where p.id_teacher = 
-            }
-*/
-
-            //db = new ExamTicket_dbEntities();
-
-            //var subjectList = from tech in db.Teachers
-            //                  where db.SubjectOfTeacher.id
-            //                  select new
-            //                  {
-            //                      id_teacher = tech.id_teacher,
-            //                      name_tch = tech.name_tch
-            //                  };
-
-
         }
         public void QuarySubject(int int_var)
         {
@@ -207,26 +195,150 @@ namespace WinLogin
             {
                 using (ExamTicket_dbEntities db1 = new ExamTicket_dbEntities())
                 {
-                    //int var_id = 3;
+                    var list = from a in db1.Subjects
+                               from b in db1.Teachers
+                               from c in db1.SubjectOfTeacher
+                               where b.id_teacher == int_var
+                               where b.id_teacher == c.id_teacher_sot
+                               where c.id_subject_sot == a.id_subject
+                               select a;
 
-                    //var studentGrades = db1.output_subject_of_teacher("var_id");
-                    //foreach (var student in studentGrades) {
-                    //    MessageBox.Show(student, "");
+                    foreach (var s in list)
+                        listBox_subject_of_teacher.Items.Add(s.name_subject);
 
-                    //System.Data.SqlClient.SqlParameter param = new System.Data.SqlClient.SqlParameter("@var_id", 3);
-                    //var query = db1.Database.SqlQuery<SubjectOfTeacherFromDB>("output_subject_of_teacher @var_id", param);
-                    //foreach (var p in query)
-                    //    //listBox_subject_of_teacher.Items.Add(p.Name);
-                    //    MessageBox.Show(p.name, p.id.ToString());
-                    ////Console.WriteLine("{0} - {1}", p.Name, p.Price);
+                    // Ниже абсолютно рабочий код, он реализован просто через хранимую процедуру. 
 
-                    IEnumerable<output_subject_of_teacher_Result> query = db1.output_subject_of_teacher(int_var);
-                    foreach (output_subject_of_teacher_Result p in query)
-                        listBox_subject_of_teacher.Items.Add(p.name_subject);
-
-
+                    ////IEnumerable<output_subject_of_teacher_Result> query = db1.output_subject_of_teacher(int_var);
+                    ////foreach (output_subject_of_teacher_Result p in query)
+                    ////    listBox_subject_of_teacher.Items.Add(p.name_subject);
                 }
 
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show(e1.Message, "Exception stored procedure", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void listBox_all_subjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Add_ToSubjectOfTeacher(object sender, RoutedEventArgs e)
+        {
+            if(listBox_all_subjects.SelectedIndex == -1)
+            {
+                MessageBox.Show("Вы не выбрали предмет для добавления из списка предметов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                if (listBox_subject_of_teacher.Items.IndexOf(listBox_all_subjects.SelectedItem) == -1)
+                    listBox_subject_of_teacher.Items.Add(listBox_all_subjects.SelectedItem);
+            }
+            listBox_all_subjects.SelectedIndex = -1;
+        }
+
+        private void Delete_ToSubjectOfTeacher(object sender, RoutedEventArgs e)
+        {
+            if (listBox_subject_of_teacher.SelectedIndex == -1)
+            {
+               MessageBox.Show("Вы не выбрали предмет для удаления из списка предметов", "Предупреждение", MessageBoxButton.OK);
+            }
+            else
+            {
+                if (MessageBox.Show("Вы уверены, что хотите удалить выбраный предмет", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    listBox_subject_of_teacher.Items.Remove(listBox_subject_of_teacher.SelectedItem);
+            }
+            listBox_subject_of_teacher.SelectedIndex = -1;
+        }
+
+        private void Save_ToSubjectOfTeacher(object sender, RoutedEventArgs e)
+        {
+            // Список для id предметов из listBox_subject_of_teacher
+            List<int> list_id = new List<int>();
+            int temp2 = 0;
+
+            using (ExamTicket_dbEntities db3 = new ExamTicket_dbEntities())
+            {//
+                for (int i = 0; i < listBox_subject_of_teacher.Items.Count; i++)
+                {
+                    string temp = listBox_subject_of_teacher.Items[i].ToString();
+
+                        var list_id_subject = from a in db3.Subjects
+                                              where a.name_subject == temp
+                                              select a;
+
+                        foreach (var s in list_id_subject)
+                        {
+                            int temp1 = Convert.ToInt32(s.id_subject.ToString());
+                            list_id.Add(temp1);
+                        }                                         
+                }
+            }//
+
+            // Это Id преподавателя которому нужно добавить предметы из listBox_subject_of_teacher
+            temp2 = Convert.ToInt32(dataGrid_teachers_subjects_Id.Text);
+
+            // Вызов функции для работы з БД
+            RecordSubjectOfTeacher(list_id, temp2); 
+
+            // Очистка списка
+            list_id.Clear();
+        }
+
+        // Метод, котрый записывает предметы из listBox_subject_of_teacher в базу данных
+        public void RecordSubjectOfTeacher(List<int> list_id_teach, int id_teach)
+        {
+            list_id_teach.Sort();
+
+            // Логическая переменная - "флажок" для удаления записей в БД 1 раз
+            bool deleteRecord = false;
+            try
+            {
+                using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
+                {
+                    SubjectOfTeacher sot = new SubjectOfTeacher();
+
+                    // Задача удалить все записи для преподавателя id_teach
+                    if(list_id_teach.Count == 0)
+                    {
+                        db.SubjectOfTeacher.RemoveRange(db.SubjectOfTeacher.Where(x => x.id_teacher_sot == id_teach));
+                        db.SaveChanges();            
+                    }
+
+                    // Проверка на то, есть ли у преподавателя id_teach вообще записи в таблице SubjectOfTeacher
+                    var id_teach_sot = from a in db.SubjectOfTeacher
+                                       where a.id_teacher_sot == id_teach
+                                       //orderby a.id_subject_sot ascending
+                                       select a;
+
+                        foreach (var s in id_teach_sot)
+                        {
+                            // Сначала удалим все существующие записи данного преподавателя,
+                            // а потом создадим после следующем блоке операторов
+                            if(deleteRecord == false)
+                            {
+                                db.SubjectOfTeacher.RemoveRange(db.SubjectOfTeacher.Where(x => x.id_teacher_sot == id_teach));
+                                db.SaveChanges();
+                                deleteRecord = true;
+                            }                            
+                        }
+                    
+                    // 1. Создание записей, у тех преподавателей, у которых записей не было изначально.
+                    // 2. Создание записей, у тех преподавателей, у которых они были изначально, но были удалены
+                    // в предедущем блоке кода.
+
+                        for(int i = 0; i < list_id_teach.Count; i++)
+                        {
+                            sot.id_teacher_sot = id_teach;
+                            sot.id_subject_sot = list_id_teach[i];
+                            sot.active = true;
+                            db.SubjectOfTeacher.Add(sot);
+                            db.SaveChanges();
+                        }                       
+                    MessageBox.Show("Записи успешно обновлены", "Информация");                     
+                }
             }
             catch (Exception e1)
             {
@@ -236,11 +348,3 @@ namespace WinLogin
     }
 
 }
-
-
-/*
-use ExamTicket_db
-select Teachers.name_tch, Subjects.name_subject 
-from Subjects, Teachers, SubjectOfTeacher
-where Teachers.id_teacher = 3 and Teachers.id_teacher = id_teacher_sot and id_subject_sot = id_subject
-*/
