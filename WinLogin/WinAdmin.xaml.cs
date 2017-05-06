@@ -87,8 +87,15 @@ namespace WinLogin
         {
             if (MessageBox.Show("Вы действительно хотите удалить запись?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                db.Teachers.Remove((Teachers)dataGrid_teachers.SelectedItem);
-                Save_tch();
+                try
+                {
+                    db.Teachers.Remove((Teachers)dataGrid_teachers.SelectedItem);
+                    Save_tch();
+                }
+                catch (Exception e5)
+                {
+                    MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
@@ -111,24 +118,39 @@ namespace WinLogin
         ///*******************************************************************************************************
         private void Load_sub()
         {
-            db.Subjects.Load();
-            //dataGrid_Subjects.ItemsSource = db.Teachers.Local.ToBindingList();
-            dataGrid_Subjects.ItemsSource = db.Subjects.Local.ToBindingList();
-
-            // Очистка listBox_all_subjects и загрузка данными из базы
-            listBox_all_subjects.Items.Clear();
-            using (ExamTicket_dbEntities db2 = new ExamTicket_dbEntities())
+            try
             {
-                var listOfAllSubjects = from p in db2.Subjects
-                                        select p;
-                foreach (var s in listOfAllSubjects)
-                    listBox_all_subjects.Items.Add(s.name_subject);
+                db.Subjects.Load();
+                //dataGrid_Subjects.ItemsSource = db.Teachers.Local.ToBindingList();
+                dataGrid_Subjects.ItemsSource = db.Subjects.Local.ToBindingList();
+
+                // Очистка listBox_all_subjects и загрузка данными из базы
+                listBox_all_subjects.Items.Clear();
+                using (ExamTicket_dbEntities db2 = new ExamTicket_dbEntities())
+                {
+                    var listOfAllSubjects = from p in db2.Subjects
+                                            select p;
+                    foreach (var s in listOfAllSubjects)
+                        listBox_all_subjects.Items.Add(s.name_subject);
+                }
+            }
+            catch (Exception e5)
+            {
+                MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Save_sub()
         {
-            db.SaveChanges();
-            Load_sub();
+            try
+            {
+                db.SaveChanges();
+                Load_sub();
+            }
+            catch (Exception e5)
+            {
+                MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
         
         private void Add_Subject_Click(object sender, RoutedEventArgs e)
@@ -150,8 +172,15 @@ namespace WinLogin
         {
             if (MessageBox.Show("Вы действительно хотите удалить запись?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                db.Subjects.Remove((Subjects)dataGrid_Subjects.SelectedItem);
-                Save_sub();
+                try
+                {
+                    db.Subjects.Remove((Subjects)dataGrid_Subjects.SelectedItem);
+                    Save_sub();
+                }
+                catch (Exception e5)
+                {
+                    MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                }                
             }
         }
 
@@ -159,40 +188,46 @@ namespace WinLogin
         // предметы, которые закреплены за выведеным преподавателнм
         private void DataGrid_teachers_subjects_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            int selectedColumn = dataGrid_teachers_subjects.CurrentCell.Column.DisplayIndex;
-            if(selectedColumn == 0)
-            {
-                var selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
-                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
-                var id_sub = (cellContent as TextBlock).Text;
-                selectedColumn = 1;
-                selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
-                cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
-                var name_sub = (cellContent as TextBlock).Text;
-
-                //MessageBox.Show("id: " + id_sub + " name: " + name_sub, "");
-                QuarySubject(Convert.ToInt32(id_sub));
-            }
-            else if(selectedColumn == 1)
-            {
-                var selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
-                var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
-                var name_sub = (cellContent as TextBlock).Text;
-                selectedColumn = 0;
-                selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
-                cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
-                var id_sub = (cellContent as TextBlock).Text;
-
-                //MessageBox.Show("id: " + id_sub + " name: " + name_sub, "");
-                QuarySubject(Convert.ToInt32(id_sub));
-            }
-
-        }
-        public void QuarySubject(int int_var)
-        {
-            listBox_subject_of_teacher.Items.Clear();
             try
             {
+                int selectedColumn = dataGrid_teachers_subjects.CurrentCell.Column.DisplayIndex;
+                if (selectedColumn == 0)
+                {
+                    var selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                    var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                    var id_sub = (cellContent as TextBlock).Text;
+                    selectedColumn = 1;
+                    selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                    cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                    var name_sub = (cellContent as TextBlock).Text;
+
+                    //MessageBox.Show("id: " + id_sub + " name: " + name_sub, "");
+                    QuarySubject(Convert.ToInt32(id_sub));
+                }
+                else if (selectedColumn == 1)
+                {
+                    var selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                    var cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                    var name_sub = (cellContent as TextBlock).Text;
+                    selectedColumn = 0;
+                    selectedCell = dataGrid_teachers_subjects.SelectedCells[selectedColumn];
+                    cellContent = selectedCell.Column.GetCellContent(selectedCell.Item);
+                    var id_sub = (cellContent as TextBlock).Text;
+
+                    //MessageBox.Show("id: " + id_sub + " name: " + name_sub, "");
+                    QuarySubject(Convert.ToInt32(id_sub));
+                } 
+            }
+            catch (Exception e5)
+            {
+                MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        public void QuarySubject(int int_var)
+        {            
+            try
+            {
+                listBox_subject_of_teacher.Items.Clear();
                 using (ExamTicket_dbEntities db1 = new ExamTicket_dbEntities())
                 {
                     var list = from a in db1.Subjects
@@ -212,7 +247,6 @@ namespace WinLogin
                     ////foreach (output_subject_of_teacher_Result p in query)
                     ////    listBox_subject_of_teacher.Items.Add(p.name_subject);
                 }
-
             }
             catch (Exception e1)
             {
@@ -220,50 +254,66 @@ namespace WinLogin
             }
         }
 
-        private void listBox_all_subjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void Add_ToSubjectOfTeacher(object sender, RoutedEventArgs e)
         {
-            if(listBox_all_subjects.SelectedIndex == -1)
+            try
             {
-                MessageBox.Show("Вы не выбрали предмет для добавления из списка предметов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                if (listBox_all_subjects.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Вы не выбрали предмет для добавления из списка предметов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    if (listBox_subject_of_teacher.Items.IndexOf(listBox_all_subjects.SelectedItem) == -1)
+                        listBox_subject_of_teacher.Items.Add(listBox_all_subjects.SelectedItem);
+                }
+                listBox_all_subjects.SelectedIndex = -1;
+
+                // Сохранение изменений в базе
+                Save_ToSubjectOfTeacher();
             }
-            else
+            catch (Exception e5)
             {
-                if (listBox_subject_of_teacher.Items.IndexOf(listBox_all_subjects.SelectedItem) == -1)
-                    listBox_subject_of_teacher.Items.Add(listBox_all_subjects.SelectedItem);
+                MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            listBox_all_subjects.SelectedIndex = -1;
         }
 
         private void Delete_ToSubjectOfTeacher(object sender, RoutedEventArgs e)
         {
-            if (listBox_subject_of_teacher.SelectedIndex == -1)
+            try
             {
-               MessageBox.Show("Вы не выбрали предмет для удаления из списка предметов", "Предупреждение", MessageBoxButton.OK);
+                if (listBox_subject_of_teacher.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Вы не выбрали предмет для удаления из списка предметов", "Предупреждение", MessageBoxButton.OK);
+                }
+                else
+                {
+                    if (MessageBox.Show("Вы уверены, что хотите удалить выбраный предмет", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        listBox_subject_of_teacher.Items.Remove(listBox_subject_of_teacher.SelectedItem);
+                }
+                listBox_subject_of_teacher.SelectedIndex = -1;
+                // Сохранение изменений в базе
+                Save_ToSubjectOfTeacher();
             }
-            else
+            catch (Exception e5)
             {
-                if (MessageBox.Show("Вы уверены, что хотите удалить выбраный предмет", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                    listBox_subject_of_teacher.Items.Remove(listBox_subject_of_teacher.SelectedItem);
+                MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            listBox_subject_of_teacher.SelectedIndex = -1;
         }
 
-        private void Save_ToSubjectOfTeacher(object sender, RoutedEventArgs e)
+        private void Save_ToSubjectOfTeacher()
         {
-            // Список для id предметов из listBox_subject_of_teacher
-            List<int> list_id = new List<int>();
-            int temp2 = 0;
+            try
+            {
+                // Список для id предметов из listBox_subject_of_teacher
+                List<int> list_id = new List<int>();
+                int temp2 = 0;
 
-            using (ExamTicket_dbEntities db3 = new ExamTicket_dbEntities())
-            {//
-                for (int i = 0; i < listBox_subject_of_teacher.Items.Count; i++)
-                {
-                    string temp = listBox_subject_of_teacher.Items[i].ToString();
+                using (ExamTicket_dbEntities db3 = new ExamTicket_dbEntities())
+                {//
+                    for (int i = 0; i < listBox_subject_of_teacher.Items.Count; i++)
+                    {
+                        string temp = listBox_subject_of_teacher.Items[i].ToString();
 
                         var list_id_subject = from a in db3.Subjects
                                               where a.name_subject == temp
@@ -273,29 +323,35 @@ namespace WinLogin
                         {
                             int temp1 = Convert.ToInt32(s.id_subject.ToString());
                             list_id.Add(temp1);
-                        }                                         
-                }
-            }//
+                        }
+                    }
+                }//
 
-            // Это Id преподавателя которому нужно добавить предметы из listBox_subject_of_teacher
-            temp2 = Convert.ToInt32(dataGrid_teachers_subjects_Id.Text);
+                // Это Id преподавателя которому нужно добавить предметы из listBox_subject_of_teacher
+                temp2 = Convert.ToInt32(dataGrid_teachers_subjects_Id.Text);
 
-            // Вызов функции для работы з БД
-            RecordSubjectOfTeacher(list_id, temp2); 
+                // Вызов функции для работы з БД
+                RecordSubjectOfTeacher(list_id, temp2);
 
-            // Очистка списка
-            list_id.Clear();
+                // Очистка списка
+                list_id.Clear();
+            }
+            catch (Exception e5)
+            {
+                MessageBox.Show(e5.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         // Метод, котрый записывает предметы из listBox_subject_of_teacher в базу данных
         public void RecordSubjectOfTeacher(List<int> list_id_teach, int id_teach)
         {
-            list_id_teach.Sort();
-
-            // Логическая переменная - "флажок" для удаления записей в БД 1 раз
-            bool deleteRecord = false;
             try
             {
+                list_id_teach.Sort();
+
+                // Логическая переменная - "флажок" для удаления записей в БД 1 раз
+                bool deleteRecord = false;
+
                 using (ExamTicket_dbEntities db = new ExamTicket_dbEntities())
                 {
                     SubjectOfTeacher sot = new SubjectOfTeacher();
@@ -346,5 +402,9 @@ namespace WinLogin
             }
         }
     }
-
 }
+
+
+
+
+

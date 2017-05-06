@@ -143,12 +143,12 @@
                         <ListBox x:Name="listBox_subject_of_teacher" HorizontalAlignment="Left" Height="160" Margin="0,0,0,0" Width="205" FontWeight="Normal"/>
 
                         <StackPanel Orientation="Vertical" Margin="20,0" Width="90" Height="160">
-                            <Button Name="buttonAddSubject" Content="Добавить" Height="27" Margin="0,20,0,0" Background="#FF9AE6BC" Click="Add_ToSubjectOfTeacher" FontWeight="Normal"/>
-                            <Button Name="buttonDeleteSubject" Content="Удалить" Height="27" Margin="0,20,0,0" Background="#FFEE7373" Click="Delete_ToSubjectOfTeacher" FontWeight="Normal" />
-                            <Button Name="buttonSaveSubject" Content="Сохранить" Height="27" Margin="0,20,0,0" Background="#FFF3E979" Click="Save_ToSubjectOfTeacher" FontWeight="Normal" />
+                            <Button Name="buttonAddSubject" Background="#FF9AE6BC" Content="Добавить"  Height="27" Margin="0,35,0,0" Click="Add_ToSubjectOfTeacher" FontWeight="Normal">
+                            </Button>
+                            <Button x:Name="buttonDeleteSubject" Background="#FFEE7373" Content="Удалить" Height="27" Margin="0,35,0,0" Click="Delete_ToSubjectOfTeacher" FontWeight="Normal" />
                         </StackPanel>
 
-                        <ListBox Name="listBox_all_subjects" Height="160" Margin="0" SelectionChanged="listBox_all_subjects_SelectionChanged" FontWeight="Normal" Width="205"/>
+                        <ListBox Name="listBox_all_subjects" Height="160" Margin="0" FontWeight="Normal" Width="205"/>
                     </StackPanel>
                 </Grid>
 

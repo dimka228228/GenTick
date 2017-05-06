@@ -6,7 +6,7 @@
     <Grid Background="{DynamicResource {x:Static SystemColors.InactiveCaptionBrushKey}}" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="Auto" MinHeight="524" />
+            <RowDefinition Height="Auto" MinHeight="520" />
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -74,7 +74,7 @@
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,5,10,5" >
                         <Label Content="Предмет" Width="80" VerticalAlignment="Center" Margin="0,4,20,4" />
-                        <ComboBox x:Name="comboBox_name_of_subject_catogory" HorizontalAlignment="Center" Margin="10,7,20,7"  VerticalAlignment="Center" Width="326" Height="26" SelectionChanged="comboBox_name_of_subject_catogory_SelectionChanged" />
+                        <ComboBox x:Name="comboBox_name_of_subject_TabCatogory" HorizontalAlignment="Center" Margin="10,7,20,7"  VerticalAlignment="Center" Width="326" Height="26" SelectionChanged="comboBox_name_of_subject_TabCatogory_SelectionChanged" />
                     </StackPanel>
 
                     <DataGrid x:Name="dataGridCatogory" Grid.Row="1" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True"  Margin="0,5,10,10" MouseUp="dataGridCatogory_MouseUp" >
@@ -103,10 +103,10 @@
                 <Grid Margin="10,6,-10,-6" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="39"/>
-                        <RowDefinition Height="7*"/>
-                        <RowDefinition Height="35*"/>
-                        <RowDefinition Height="7*"/>
-                        <RowDefinition Height="24*"/>
+                        <RowDefinition Height="14*"/>
+                        <RowDefinition Height="68*"/>
+                        <RowDefinition Height="13*"/>
+                        <RowDefinition Height="51*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="113*"/>
@@ -116,35 +116,36 @@
                         <Label Content="Предмет" Width="65" VerticalAlignment="Center" Margin="0,6,0,7" />
                         <ComboBox x:Name="comboBox_name_of_subject_questions" HorizontalAlignment="Center" Margin="0,6,0,7"  VerticalAlignment="Center" Width="148" Height="26" SelectionChanged="comboBox_name_of_subject_questions_SelectionChanged" />
                         <Label Content="Категории" Width="69" VerticalAlignment="Center" Margin="10,6,0,7" />
-                        <ComboBox x:Name="comboBox_name_of_category" HorizontalAlignment="Center" Margin="5,6,0,7"  VerticalAlignment="Center" Width="246" Height="26" />
+                        <ComboBox x:Name="comboBox_name_of_category" HorizontalAlignment="Center" Margin="5,6,0,7"  VerticalAlignment="Center" Width="246" Height="26" SelectionChanged="comboBox_name_of_category_SelectionChanged" />
 
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,20,0">
                         <Label x:Name="labelLogin_Copy2" Content="Поиск" HorizontalAlignment="Center" Height="26" Width="57" Margin="0"/>
-                        <TextBox x:Name="textBoxLogin_Copy" HorizontalAlignment="Center" Height="26" Margin="9,0,0,0" TextWrapping="Wrap" Width="328"/>
-                        <Button x:Name="buttonLogin" Content="Ок" HorizontalAlignment="Left" Margin="45,0,0,0" Width="60" Height="26" VerticalAlignment="Center" />
+                        <TextBox x:Name="textBoxFindQuestions" HorizontalAlignment="Center" Height="26" Margin="9,8,0,8" TextWrapping="Wrap" Width="328" TextChanged="TextBoxFindQuestions_TextChanged"/>
                     </StackPanel>
 
-                    <DataGrid x:Name="dataGridTeacher_list_questions" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,5,20,15">
+                    <DataGrid x:Name="dataGridTeacher_list_questions" Grid.Row="2" RowDetailsVisibilityMode="VisibleWhenSelected"  EnableRowVirtualization="True" AutoGenerateColumns="False" SelectionMode="Single" IsTextSearchEnabled="True" IsReadOnly="True" Margin="0,5,20,5" MouseUp="dataGridTeacher_list_questions_MouseUp">
                         <DataGrid.Columns>
-                            <DataGridTextColumn x:Name="idColumn1" Header="Id" Binding="{Binding id_teacher}" Width="30"/>
-                            <DataGridTextColumn x:Name="categoryColumn1" Header="Имя" Binding="{Binding name_tch}" Width="*"/>
-                            <DataGridTextColumn x:Name="loginColumn1" Header="Логин" Binding="{Binding login_tch}" Width="30"/>
-                            <DataGridTextColumn x:Name="passwordColumn1" Header="Пароль" Binding="{Binding password_tch}" Width="*"/>
+                            <DataGridTextColumn x:Name="text_question_dg" Header="Текст вопроса" Binding="{Binding text_question}" Width="400"/>
+                            <DataGridTextColumn x:Name="pathToPicture_dg" Header="Путь к иллюстрации" Binding="{Binding pathToPicture}" Width="*"/>
+                            <!--<DataGridTextColumn x:Name="text_question_dg" Header="Текст вопроса" Width="400"/>
+                            <DataGridTextColumn x:Name="pathToPicture_dg" Header="Путь к иллюстрации" Width="*"/>-->
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,1">
-                        <Button x:Name="buttonAddQuestion" Content="Добавить" Background="#FF9AE6BC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Height="25" Margin="0,0,0,0"/>
-                        <Button x:Name="buttonEditQuestion" Content="Редактировать" Background="#FFF3E979" HorizontalAlignment="Left" Margin="0,0,0,0"  VerticalAlignment="Top" Width="97" Height="25" />
-                        <Button x:Name="buttonDeleteQuestion" Content="Удалить" Background="#FFEE7373" HorizontalAlignment="Left" VerticalAlignment="Top" Width="97" Height="25" Margin="0,0,0,0"/>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5,20,5">
+                        <Button x:Name="buttonAddQuestion" Content="Добавить" Background="#FF9AE6BC" HorizontalAlignment="Left" Width="90" Height="25" Margin="30,0,0,0" Click="buttonAddQuestion_Click"/>
+                        <Button x:Name="buttonEditQuestion" Content="Редактировать" Background="#FFF3E979" HorizontalAlignment="Left" Margin="40,0,0,0" Width="90" Height="25" Click="buttonEditQuestion_Click" />
+                        <Button x:Name="buttonDeleteQuestion" Content="Удалить" Background="#FFEE7373" HorizontalAlignment="Left" Width="90" Height="25" Margin="40,0,0,0" Click="buttonDeleteQuestion_Click"/>
+                        <Button x:Name="buttonUpdateQuestion" Content="Обновить" HorizontalAlignment="Left" Width="90" Height="25" Margin="40,0,0,0" Click="buttonUpdateQuestion_Click"/>
+
                     </StackPanel>
 
                     <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,0,10,0">
                         <Label x:Name="labelLogin_Copy4" Content="Рисунок" Grid.Row="4" Height="26" Width="76" Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                        <Border Grid.Row="5" x:Name="brdSiteLogo" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="91,10,0,0" Height="93"  Width="377">
-                            <Image  HorizontalAlignment="Left" Margin="0,0,-2,-25" Grid.Row="7" Width="377" />
+                        <Border Grid.Row="5" x:Name="brdSiteLogo" BorderThickness="1" BorderBrush="#FF000000" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="91,10,0,0" Height="120"  Width="368">
+                            <Image Name="image_Questions" Margin="0,0,0,0" Height="120" VerticalAlignment="Top" />
                         </Border>
                     </StackPanel>
 
