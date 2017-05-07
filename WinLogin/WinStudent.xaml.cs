@@ -32,22 +32,11 @@ namespace WinLogin
         List<QuestionsFromDb> listQuestionsFromDb = new List<QuestionsFromDb>();
         // Список категорий, которые уже есть в билете
         List<int> listCatigory = new List<int>();
-            
-
-        //// Словарь для названия категорий и хранения id выбраного предмета
-        //Dictionary<string, int> dict_listCategory = new Dictionary<string, int>();
-        //// Словарь для хранения  текста вопроса и id категории
-        //Dictionary<string, int> dict_listQuestion = new Dictionary<string, int>();
-
+        
         // Выбранный предмет
         int current_id_subject = 0;
         // Количество вопросов в билете
         int countQuestion = 0;
-
-        //// Общее количество вопросов по предмету 
-        //int countAllQuestion = 0;
-        //// Номер текушего вопроса в  listQuestionsFromDb
-        //int indexListQuestionsFromDb = 0;
 
         Random random = new Random();
 
@@ -56,8 +45,7 @@ namespace WinLogin
 
         public WinStudent()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
 
         // Вывод вопросов и рисунков
@@ -182,7 +170,8 @@ namespace WinLogin
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show(e.Message, "Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("По этому предмету нет вопросов", "Предупреждение!");
             }                
         }
 
@@ -201,14 +190,14 @@ namespace WinLogin
         // Проверка на повторение категорий в билете
         private void ChekCategory()
         {
-            for (int q = 0; q < listCatigory.Count; q++)
-            {
-                if(GetFromlistQuestionsFromDb().Category == listCatigory[q])
+                for (int q = 0; q < listCatigory.Count; q++)
                 {
-                    RandomIndexlistQuestionsFromDb();
-                    ChekCategory();
+                    if (GetFromlistQuestionsFromDb().Category == listCatigory[q])
+                    {
+                        RandomIndexlistQuestionsFromDb();
+                        ChekCategory();
+                    }
                 }
-            }
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

@@ -5,6 +5,12 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinLogin", "WinLogin\WinLogin.csproj", "{E8DA8359-EF41-49DF-8BAC-B14E01704EAF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6534F06F-52C7-49AA-A2F8-3C9A852AFFF2}"
+	ProjectSection(SolutionItems) = preProject
+		ExamTicket_db_LogBackup_2017-03-04_00-19-34.bak = ExamTicket_db_LogBackup_2017-03-04_00-19-34.bak
+		readme.txt = readme.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
